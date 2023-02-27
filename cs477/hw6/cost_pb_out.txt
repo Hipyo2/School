@@ -1,0 +1,4 @@
+Optimal Values to all subproblems: 
+11 20 29 40 51 60 69 78 87 98 
+
+Optimal Cost: 98

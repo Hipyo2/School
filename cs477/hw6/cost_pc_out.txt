@@ -1,0 +1,6 @@
+Optimal Values to all subproblems: 
+11 20 29 40 51 60 69 78 87 98 
+
+Optimal Cost: 98
+
+Choices Vector: A A A B B B B A A A 
