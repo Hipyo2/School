@@ -1,0 +1,8 @@
+/home/nang/Desktop/project6/build/CMakeFiles/install/strip.dir
+/home/nang/Desktop/project6/build/CMakeFiles/proj6.dir
+/home/nang/Desktop/project6/build/CMakeFiles/edit_cache.dir
+/home/nang/Desktop/project6/build/CMakeFiles/install/local.dir
+/home/nang/Desktop/project6/build/CMakeFiles/VehicleSource.dir
+/home/nang/Desktop/project6/build/CMakeFiles/rebuild_cache.dir
+/home/nang/Desktop/project6/build/CMakeFiles/list_install_components.dir
+/home/nang/Desktop/project6/build/CMakeFiles/install.dir

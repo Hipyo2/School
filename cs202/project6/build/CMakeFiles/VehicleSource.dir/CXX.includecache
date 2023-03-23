@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/VehicleHeaders/Car.h
+VehicleHeaders/Vehicle.h
+-
+
+../include/VehicleHeaders/Vehicle.h
+iostream
+-
+cstring
+-
+fstream
+-
+
+/home/nang/Desktop/project6/src/VehicleSource/Car.cpp
+VehicleHeaders/Car.h
+-
+VehicleHeaders/Vehicle.h
+-
+cstring
+-
+iostream
+-
+fstream
+-
+
+/home/nang/Desktop/project6/src/VehicleSource/Vehicle.cpp
+VehicleHeaders/Vehicle.h
+-
+iostream
+-
+fstream
+-
+
