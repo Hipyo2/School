@@ -1,0 +1,78 @@
+
+//The values are created and inserted into the left leaning red black tree. 
+//After the insertion and proper rotations, it outputs the value, color of the node, the parent node value, and the color of the parent node. 
+//This is done 10 times. 
+//The drawing in my documentation better reflects what is happening to the tree. The value of 252 becomes the new root after rotating.
+
+	Value Inserted: 290 and Color: Black
+	This is a Root
+	Value Inserted: 11 and Color: Red
+	The immediate parent of 11 is 290 with Color: Black
+	Value Inserted: 252 and Color: Black
+	This is a Root
+	Value Inserted: 93 and Color: Black
+	The immediate parent of 93 is 252 with Color: Black
+	Value Inserted: 270 and Color: Red
+	The immediate parent of 270 is 290 with Color: Black
+	Value Inserted: 291 and Color: Black
+	The immediate parent of 291 is 290 with Color: Black
+	Value Inserted: 88 and Color: Black
+	The immediate parent of 88 is 252 with Color: Black
+	Value Inserted: 81 and Color: Black
+	The immediate parent of 81 is 88 with Color: Black
+	Value Inserted: 193 and Color: Black
+	The immediate parent of 193 is 88 with Color: Black
+	Value Inserted: 261 and Color: Red
+	The immediate parent of 261 is 270 with Color: Black
+
+//This is the inorder traversal of the tree. It reflects the fully and properly rotated tree.
+//I outputted the value, color, parent, and parent color. The middle value of 252 is the root of the completed tree.
+	Inorder Traversal of Tree
+
+	Value:  11 Color: Red
+	The parent of 11 is 81 with Color: Black
+	Value:  81 Color: Black
+	The parent of 81 is 88 with Color: Black
+	Value:  88 Color: Black
+	The parent of 88 is 252 with Color: Black
+	Value:  93 Color: Red
+	The parent of 93 is 193 with Color: Black
+	Value: 193 Color: Black
+	The parent of 193 is 88 with Color: Black
+	Value: 252 Color: Black
+	This is a Root.
+	Value: 261 Color: Red
+	The parent of 261 is 270 with Color: Black
+	Value: 270 Color: Black
+	The parent of 270 is 290 with Color: Black
+	Value: 290 Color: Black
+	The parent of 290 is 252 with Color: Black
+	Value: 291 Color: Black
+	The parent of 291 is 290 with Color: Black
+
+
+//This is the outputted inorder traversal of the tree after the 4th inserted value is removed.
+//The Tree removes the value of 93 which does not change the tree in terms of rotations due to it being a red node at the bottom of the tree. 
+//values 11 and 261 remain red nodes and the tree does not change except there is no node with value 93
+
+	Deleting 4th insert...
+	Value:  11 Color: Red
+	The parent of 11 is 81 with Color: Black
+	Value:  81 Color: Black
+	The parent of 81 is 88 with Color: Black
+	Value:  88 Color: Black
+	The parent of 88 is 252 with Color: Black
+	Value: 193 Color: Black
+	The parent of 193 is 88 with Color: Black
+	Value: 252 Color: Black
+	This is a Root.
+	Value: 261 Color: Red
+	The parent of 261 is 270 with Color: Black
+	Value: 270 Color: Black
+	The parent of 270 is 290 with Color: Black
+	Value: 290 Color: Black
+	The parent of 290 is 252 with Color: Black
+	Value: 291 Color: Black
+	The parent of 291 is 290 with Color: Black
+
+

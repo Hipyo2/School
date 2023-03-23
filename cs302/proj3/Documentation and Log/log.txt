@@ -1,0 +1,445 @@
+//////////////////////////////////////////
+//Binary Search Tree Implementation Log///
+//////////////////////////////////////////
+
+//The program first outputs the menu with five options
+
+	MENU
+	1. Generate Random Tree Values
+	2. Preorder Traversal
+	3. Inorder Traversal
+	4. Postorder Traversal
+	5. EXIT
+
+//Option 1: Generate Random Tree Values
+//The first option generates a binary search tree with 100 unique random values from 1 to 200
+//After the tree is created, it calls the getHeight function in the BinarySearchTree class to get the height of the tree
+//The values of the tree are outputted in the order that the values were generated
+
+	Tree has been generated
+	Height of Tree: 12
+	Values Generated: 
+	102
+	104
+	101
+	44
+	161
+	65
+	98
+	7
+	99
+	173
+	78
+	149
+	125
+	89
+	109
+	121
+	178
+	14
+	132
+	157
+	198
+	181
+	74
+	118
+	26
+	100
+	62
+	57
+	24
+	51
+	158
+	127
+	151
+	154
+	40
+	16
+	114
+	23
+	75
+	163
+	123
+	20
+	140
+	176
+	185
+	84
+	183
+	156
+	52
+	9
+	38
+	32
+	116
+	147
+	111
+	66
+	150
+	33
+	64
+	136
+	186
+	43
+	27
+	113
+	180
+	50
+	197
+	6
+	153
+	165
+	182
+	175
+	145
+	97
+	122
+	55
+	54
+	200
+	60
+	18
+	110
+	141
+	58
+	11
+	36
+	159
+	10
+	67
+	83
+	56
+	76
+	19
+	130
+	129
+	167
+	107
+	37
+	69
+	94
+	148
+
+//Option 2: Preorder Traversal
+//Option 2 traverses the tree using preorder traversal
+//It calls the function preorderTraverse in the BinarySearchTree class
+//It starts with the root and outputs the left side to the right side
+//It uses the visit function in the treeMain.cpp file to output each value it traverses to.
+	102
+	101
+	44
+	7
+	6
+	14
+	9
+	11
+	10
+	26
+	24
+	16
+	23
+	20
+	18
+	19
+	40
+	38
+	32
+	27
+	33
+	36
+	37
+	43
+	65
+	62
+	57
+	51
+	50
+	52
+	55
+	54
+	56
+	60
+	58
+	64
+	98
+	78
+	74
+	66
+	67
+	69
+	75
+	76
+	89
+	84
+	83
+	97
+	94
+	99
+	100
+	104
+	161
+	149
+	125
+	109
+	107
+	121
+	118
+	114
+	111
+	110
+	113
+	116
+	123
+	122
+	132
+	127
+	130
+	129
+	140
+	136
+	147
+	145
+	141
+	148
+	157
+	151
+	150
+	154
+	153
+	156
+	158
+	159
+	173
+	163
+	165
+	167
+	178
+	176
+	175
+	198
+	181
+	180
+	185
+	183
+	182
+	186
+	197
+	200
+
+//Option 3: Inorder Traversal
+//Option 3 traverses the tree using inorder traversal
+//It calls the function inorderTraverse in the BinarySearchTree class
+//It starts with the left side, outputs the value, and then moves to the right side
+//It uses the visit function in the treeMain.cpp file to output each value it traverses to.
+//Since it is inorder traversal of a Binary Search Tree, the output is sorted from smallest value to largest value
+
+	6
+	7
+	9
+	10
+	11
+	14
+	16
+	18
+	19
+	20
+	23
+	24
+	26
+	27
+	32
+	33
+	36
+	37
+	38
+	40
+	43
+	44
+	50
+	51
+	52
+	54
+	55
+	56
+	57
+	58
+	60
+	62
+	64
+	65
+	66
+	67
+	69
+	74
+	75
+	76
+	78
+	83
+	84
+	89
+	94
+	97
+	98
+	99
+	100
+	101
+	102
+	104
+	107
+	109
+	110
+	111
+	113
+	114
+	116
+	118
+	121
+	122
+	123
+	125
+	127
+	129
+	130
+	132
+	136
+	140
+	141
+	145
+	147
+	148
+	149
+	150
+	151
+	153
+	154
+	156
+	157
+	158
+	159
+	161
+	163
+	165
+	167
+	173
+	175
+	176
+	178
+	180
+	181
+	182
+	183
+	185
+	186
+	197
+	198
+	200
+
+//Option 4: Postorder Traversal
+//It calls the function postorderTraverse in the BinarySearchTree class
+//It starts with the left side and right side before outputting the value
+//It uses the visit function in the treeMain.cpp file to output each value it traverses to.
+//The root is the last value that is outputted
+	6
+	10
+	11
+	9
+	19
+	18
+	20
+	23
+	16
+	24
+	27
+	37
+	36
+	33
+	32
+	38
+	43
+	40
+	26
+	14
+	7
+	50
+	54
+	56
+	55
+	52
+	51
+	58
+	60
+	57
+	64
+	62
+	69
+	67
+	66
+	76
+	75
+	74
+	83
+	84
+	94
+	97
+	89
+	78
+	100
+	99
+	98
+	65
+	44
+	101
+	107
+	110
+	113
+	111
+	116
+	114
+	118
+	122
+	123
+	121
+	109
+	129
+	130
+	127
+	136
+	141
+	145
+	148
+	147
+	140
+	132
+	125
+	150
+	153
+	156
+	154
+	151
+	159
+	158
+	157
+	149
+	167
+	165
+	163
+	175
+	176
+	180
+	182
+	183
+	197
+	186
+	185
+	181
+	200
+	198
+	178
+	173
+	161
+	104
+	102
+
+
+//Option 5: Exit
+//This option exits the program.

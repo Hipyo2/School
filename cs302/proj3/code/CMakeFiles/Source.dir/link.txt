@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSource.a  CMakeFiles/Source.dir/src/BinaryNode.cpp.o CMakeFiles/Source.dir/src/BinaryNodeTree.cpp.o CMakeFiles/Source.dir/src/BinarySearchTree.cpp.o CMakeFiles/Source.dir/src/PrecondViolatedExcept.cpp.o CMakeFiles/Source.dir/src/NotFoundException.cpp.o
+/usr/bin/ranlib libSource.a

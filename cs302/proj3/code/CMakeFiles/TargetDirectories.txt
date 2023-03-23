@@ -1,0 +1,8 @@
+/home/nang/Desktop/proj3/code/CMakeFiles/install/strip.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/install/local.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/treeMain.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/Source.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/edit_cache.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/rebuild_cache.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/list_install_components.dir
+/home/nang/Desktop/proj3/code/CMakeFiles/install.dir

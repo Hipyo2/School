@@ -1,0 +1,102 @@
+//////////////////////////////
+//Sorting Implementation Log//
+//////////////////////////////
+
+//The program first outputs the menu with four options
+
+MENU
+1. Sort 1000
+2. Sort 10000
+3. Sort 100000
+4. EXIT
+
+
+//Option 1: Sort 1000
+//This option generates a text file with 1000 random values using the generateRandom function.
+//The bubbleSort class is then called to accomodate those 1000 values and calls the sortB method to sort the values.
+//The sortB method increments the number of comparisons when one value is compared to another.
+//If the value is greater than the value next to it in the array, they are swapped and the swap counter is incremented.
+//Time is also found by getting the time before the sort starts and after the sort is done and subtracting them.
+
+//The quickSort class is called and holds the same 1000 values. The class calls the sortQ method to sort the values.
+//The sortQ method calls the partition method and then recursively calls sortQ to sort through the left and right sides of the pivot.
+//The partition method divides the array into chunks to make it easier to sort.
+//It starts with the last element in the array as the pivot and compares the array at i element to the pivot.
+//If i is not the same as pivotIndex, it will swap the elements at i and pivotIndex while incrementing swaps counter.
+//At the end of the loop through all elements, it swaps the last value with the array at the pivotIndex and returns the pivotIndex.
+//Quick Sort is much faster than bubble sort.
+
+//The process is looped 10 times for each type of sort and the average of comparisons is found by adding all the number of comparisons and divide it by 10.
+//The same is done to swaps and time. 
+
+	BUBBLE SORT 1000
+	Avg Time Taken: 0.00886213
+	Avg # of Comparisons: 499500
+	Avg # of Swaps: 255818
+
+	QUICK SORT 1000
+	Avg Time Taken: 0.000226223
+	Avg # of Comparisons: 11895
+	Avg # of Swaps: 5250
+
+	BUBBLE SORT 1000 - Sorted
+	Avg Time Taken: 0.00167457
+	Avg # of Comparisons: 499500
+	Avg # of Swaps: 0
+
+	QUICK SORT 1000 - Sorted
+	Avg Time Taken: 0.00195759
+	Avg # of Comparisons: 499500
+	Avg # of Swaps: 999
+
+//Option 2: Sort 10000
+//This is very similar to option 1 but the size of the array is 10000
+//This leads to a longer sort
+
+	BUBBLE SORT 10000
+	Avg Time Taken: 0.766858
+	Avg # of Comparisons: 49995000
+	Avg # of Swaps: 24966181
+
+	QUICK SORT 10000
+	Avg Time Taken: 0.00266029
+	Avg # of Comparisons: 156401
+	Avg # of Swaps: 75785
+
+	BUBBLE SORT 10000 - Sorted
+	Avg Time Taken: 0.148925
+	Avg # of Comparisons: 49995000
+	Avg # of Swaps: 0
+
+	QUICK SORT 10000 - Sorted
+	Avg Time Taken: 0.141467
+	Avg # of Comparisons: 49765133
+	Avg # of Swaps: 9950
+
+
+//Option 3: Sort 100000
+//This is very similar to options 1 and 2 but the size of the array is 100000
+//This is the longest sort
+
+	BUBBLE SORT 100000
+	Avg Time Taken: 78.519
+	Avg # of Comparisons: 4999950000
+	Avg # of Swaps: 2501177405
+
+	QUICK SORT 100000
+	Avg Time Taken: 0.0339013
+	Avg # of Comparisons: 2040812
+	Avg # of Swaps: 988614
+
+	BUBBLE SORT 100000 - Sorted
+	Avg Time Taken: 15.0268
+	Avg # of Comparisons: 4999950000
+	Avg # of Swaps: 0
+
+	QUICK SORT 100000 - Sorted
+	Avg Time Taken: 13.5372
+	Avg # of Comparisons: 4756797956
+	Avg # of Swaps: 95293
+
+//Option 4: EXIT
+//This exits the program
