@@ -1,0 +1,12 @@
+;;Nicholas Ang
+;;CS326 Hw 4
+;;Question 5
+
+(define sum (lambda (L)
+	;;Helper Function
+	(letrec((summation (lambda (L subtotal)
+		;;If at the end of list or list is empty, output current subtotal
+		;;Otherwise call summation on the tail of the list while adding the head of the list to the subtotal
+		(if (null? L) subtotal (summation (cdr L) (+ (car L) subtotal))))))
+		;;Initial call to helper function to start subtotal at 0
+		(summation L 0))))

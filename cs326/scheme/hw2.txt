@@ -1,0 +1,180 @@
+;;Nicholas Ang
+;;CS326 Hw 2
+
+
+;;Q1
+;;Member Helper function
+(define (member x L)
+	(cond ((null? L) #f)
+	((equal? x (car L)) #t)
+	(else (member x (cdr L)))))
+
+;;Q1 a.)
+(define (is-set? L) 
+	(cond 
+	;;Base Case
+	;;Empty set is a valid set
+	((null? L) #t)
+	;;General Case
+	;;Check if head is a member of tail
+	;;If not, check next part of set
+	((member (car L) (cdr L)) #f)
+	(else (is-set? (cdr L))))
+	)
+
+;;Q1 b.)	
+(define (make-set L)
+	(cond 
+	;;Base Case
+	;;Empty set is a valid set
+	((null? L) '())
+	;;If valid set, just output the set
+	((is-set? L) L)
+	;;General Case
+	;;Check if number has duplicate
+	;;If not, add to list and move to next element in list
+	;;If there is duplicate, skip and move to next element in list
+	((not (member (car L) (cdr L))) (append (list (car L)) (make-set (cdr L))))
+	(else (make-set (cdr L))
+	)))
+
+;;Q1 c.)
+(define (subset? A S)
+	(cond
+	;;Base Case
+	;;Empty set is always a subset of a set
+	((null? A) #t)
+	;;General Case
+	;;If the head of A is in the set S, call subset function again to shrink problem
+	;;When A is shrunk down to empty set, all values of A is in S so return true
+	;;Otherwise, if head of A was not in S, return false
+	((member (car A) S) (subset? (cdr A) S))
+	(else #f))
+	)
+
+;;Q1 d.)
+(define (union A B)
+	(cond
+	;;Base Cases
+	;;If A is empty, just make list with B
+	;;If B is empty, just make list with A
+	((null? A) B)
+	((null? B) A)
+	;;General Case
+	;;Assume lists are given as sets
+	;;If the head of A is in B, skip the head of A
+	;;Otherwise add to list
+	((member (car A) B) (union (cdr A) B))
+	(else (append (list(car A)) (union (cdr A) B))))
+	)
+
+;;Q1 e.)
+(define (intersection A B)
+	(cond
+	;;Base Cases
+	;;If either A or B is empty, there is nothing intersecting between A and B
+	((null? A) '())
+	((null? B) '())
+	;;General Case
+	;;If it is not in the list B, skip the head of A
+	;;Otherwise if it is in both lists, add to new list
+	((not(member (car A) B)) (intersection (cdr A) B))
+	(else (append (list(car A)) (intersection(cdr A) B))))
+	)
+
+;;Q2
+;;Given Tree for question 2
+(define T '(13
+		(5
+			(1()())
+			(8()
+				(9()())))
+		(22
+			(17()())
+			(25()()))))
+
+;;Tree Helper functions
+(define (val T)
+	(
+	;;If its not null, get the root value of T
+	if (null? T) '() (car T))
+	)
+
+(define (left T)
+	(
+	;;If its not null, get the head of the tail of T
+	if (null? T) '() (car (cdr T)))
+	)
+
+(define (right T)
+	(
+	;;If its not null, get the head of the tail of the tail of T
+	if (null? T) '() (car (cdr (cdr T))))
+	)
+
+;;Q2 a.)
+(define (tree-member? V T)
+	(cond
+	;;Base Case
+	((null? T) #f)
+	;;General Case
+	;;If the root is equal to value, output true
+	;;Otherwise check left then right
+	((if(= V (val T)) #t (tree-member? V (left T))))
+	(else (tree-member? V (right T))))
+	)
+
+;;Q2 b.)
+(define (preorder T)
+	(cond
+	;;Base Case
+	((null? T) '())
+	;;General Case
+	;;If the tree is not empty or an empty leaf, add root to list, then add leafs on left then on right
+	(not(equal? T '()) (append (list(val T)) (append (preorder (left T)) (preorder (right T))))))
+	)
+
+;;Q2 c.)
+(define (inorder T)
+	(cond
+	;;Base Case
+	((null? T) '())
+	;;General Case
+	;;If the tree is not empty or an empty leaf, add leftmost leaf to list, then root of leaf to list
+	;;and then the right leaf to list
+	(not(equal? T '()) (append (inorder (left T)) (append (list(val T)) (inorder (right T))))))
+	)
+
+;;Q3
+(define (deep-delete V L)
+	(cond
+	;;Base Case
+	((null? L) '())
+	;;General Case
+	;;If the head of the list is a list itself, 
+	;;check the head and tail of that list for the value to be deleted
+	((list? (car L)) (cons (deep-delete V (car L)) (deep-delete V (cdr L))))
+	;;If it finds the value in the list, delete/skip over it it from list
+	((equal? V (car L)) (deep-delete V (cdr L)))
+	;;Otherwise add the non deleted value to list and check the tail
+	(else (append (list(car L)) (deep-delete V (cdr L)))))
+	)
+
+;;Q4
+(define (insert-bst V T)
+	(cond
+	;;Base Case
+	((null? T) (list V))
+	;;General Cases
+	;;If it is less than the current root, check the left side
+	;;When appropriate spot is found, it attaches it to the leaf 
+	;;Cons attaches the root of the tree to the cons of the new left side of the tree to the right side
+	;;Have to call list(right T) to get proper amount of parentheses
+	((< V (val T)) (cons (val T) (cons (insert-bst V (left T)) (list(right T)))))
+	;;If it is greater than current root, check the right side
+	;;When appropriate spot is found, it attaches the new node to leaf
+	;;Cons attaches the root of the tree to the cons of left side of the tree to the new tree with node added
+	((> V (val T)) (cons (val T) (cons (left T) (list(insert-bst V (right T))))))
+	;;Creates the same list if there is a duplicate value.
+	(else (cons (val T) (cons (left T) (right T)))))
+	)
