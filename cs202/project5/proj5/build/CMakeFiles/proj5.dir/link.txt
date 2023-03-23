@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/proj5.dir/src/proj5.cpp.o  -o proj5 libVehicleSource.a 

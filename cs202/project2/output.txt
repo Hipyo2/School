@@ -1,0 +1,6 @@
+2009 Dodge Neon 45.25 0
+2016 Subaru Outback 71.27 1
+2015 Ford Fusion 90.89 1
+2015 Ford F150 112.83 1
+2014 Toyota Tacoma 115.12 0
+
