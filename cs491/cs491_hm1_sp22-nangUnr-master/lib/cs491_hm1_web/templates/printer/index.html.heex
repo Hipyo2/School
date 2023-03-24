@@ -1,0 +1,32 @@
+<h1>Printers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Inventory Code</th>
+      <th>Office Number</th>
+      <th>Building</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for printer <- @printer do %>
+    <tr>
+      <td><%= printer.model %></td>
+      <td><%= printer.inventory_code %></td>
+      <td><%= printer.office_number %></td>
+      <td><%= printer.building %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.printer_path(@conn, :show, printer) %></span>
+        <span><%= link "Edit", to: Routes.printer_path(@conn, :edit, printer) %></span>
+        <span><%= link "Delete", to: Routes.printer_path(@conn, :delete, printer), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Printer", to: Routes.printer_path(@conn, :new) %></span>

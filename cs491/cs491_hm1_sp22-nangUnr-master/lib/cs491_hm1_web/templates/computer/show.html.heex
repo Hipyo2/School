@@ -1,0 +1,18 @@
+<h1>Show Computer</h1>
+
+<ul>
+
+  <li>
+    <strong>Brand:</strong>
+    <%= @computer.brand %>
+  </li>
+
+  <li>
+    <strong>Operating Systems Version:</strong>
+    <%= @computer.operating_systems_version %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.computer_path(@conn, :edit, @computer) %></span> |
+<span><%= link "Computer List", to: Routes.computer_path(@conn, :index) %></span>

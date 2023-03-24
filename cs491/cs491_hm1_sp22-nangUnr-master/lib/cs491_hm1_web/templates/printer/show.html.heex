@@ -1,0 +1,28 @@
+<h1>Show Printer</h1>
+
+<ul>
+
+  <li>
+    <strong>Model:</strong>
+    <%= @printer.model %>
+  </li>
+
+  <li>
+    <strong>Inventory Code:</strong>
+    <%= @printer.inventory_code %>
+  </li>
+
+  <li>
+    <strong>Office Number:</strong>
+    <%= @printer.office_number %>
+  </li>
+
+  <li>
+    <strong>Building:</strong>
+    <%= @printer.building %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.printer_path(@conn, :edit, @printer) %></span> |
+<span><%= link "Printer List", to: Routes.printer_path(@conn, :index) %></span>

@@ -1,0 +1,5 @@
+<h1>Edit Printer</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.printer_path(@conn, :update, @printer)) %>
+
+<span><%= link "Back", to: Routes.printer_path(@conn, :index) %></span>

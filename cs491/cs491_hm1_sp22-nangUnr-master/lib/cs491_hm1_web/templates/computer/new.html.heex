@@ -1,0 +1,5 @@
+<h1>New Computer</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.computer_path(@conn, :create)) %>
+
+<span><%= link "Back", to: Routes.computer_path(@conn, :index) %></span>

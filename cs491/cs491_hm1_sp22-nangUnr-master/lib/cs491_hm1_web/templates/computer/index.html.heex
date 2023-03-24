@@ -1,0 +1,28 @@
+<h1>Computers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th>Operating Systems Version</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for computer <- @computer do %>
+    <tr>
+      <td><%= computer.brand %></td>
+      <td><%= computer.operating_systems_version %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.computer_path(@conn, :show, computer) %></span>
+        <span><%= link "Edit", to: Routes.computer_path(@conn, :edit, computer) %></span>
+        <span><%= link "Delete", to: Routes.computer_path(@conn, :delete, computer), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Computer", to: Routes.computer_path(@conn, :new) %></span>
