@@ -1,0 +1,54 @@
+<h1>Task</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @task.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @task.description %>
+  </li>
+    <!--%= @task.generalarea.name %-->
+    <%= render "form2.html", Map.put(assigns, :action, Routes.task_path(@conn, :update, @task)) %>
+
+</ul>
+
+  <h1> Assignments: </h1>
+  
+  <tr>
+  <ol type = "1">
+  <%= for task <- @task.assignments do %>
+  <li>
+    <td><%= task.name %></td>
+    <ul>
+        <li>
+          <strong>Developer:</strong>
+          <td><%= task.developer.first_name %><%=" "%><%= task.developer.last_name %></td>
+        </li>
+        <li>
+          <strong>Area of Expertise:</strong>
+          <td><%= task.developer.area.name %></td>
+          <%= link "Change Area of Expertise", to: Routes.developer_path(@conn, :update, @task) %>
+        </li>
+        <li>
+          <strong>Status:</strong>
+          <td><%= task.status.name %></td>
+          <%= link "Change Status", to: Routes.assignment_path(@conn, :update, @task) %>
+        </li>
+        <li>
+          <strong>Due Date:</strong>
+          <td><%= task.due_date %></td>
+        </li>
+    </ul>
+  </li>
+  <% end %>
+  </ol>
+  </tr>
+
+
+
+<span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span> |
+<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>
