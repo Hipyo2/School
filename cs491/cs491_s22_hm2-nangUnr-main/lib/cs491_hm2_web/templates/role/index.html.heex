@@ -1,0 +1,34 @@
+<h1>Roles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Usage Count </th>
+      <th>Actions</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for role <- @roles do %>
+    <tr>
+      <td><%= role.name %></td>
+      <td><%= Enum.count(role.employee)%></td>
+      <%= if Enum.count(role.employee) == 0 do %>
+      <td>
+        <span><%= link "Show", to: Routes.role_path(@conn, :show, role) %></span>
+        <span><%= link "Edit", to: Routes.role_path(@conn, :edit, role) %></span>
+        <span><%= link "Delete", to: Routes.role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+      <% else %>
+      <td>
+        <span><%= link "Show", to: Routes.role_path(@conn, :show, role) %></span>
+        <span><%= link "Edit", to: Routes.role_path(@conn, :edit, role) %></span>
+      </td>
+      <% end %>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Role", to: Routes.role_path(@conn, :new) %></span>

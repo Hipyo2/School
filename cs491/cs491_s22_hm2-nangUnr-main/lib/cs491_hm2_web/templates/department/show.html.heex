@@ -1,0 +1,41 @@
+<h1>Department: <%=@department.name %></h1>
+
+<ul>
+<%= if Enum.count(@department.employee) == 0 do %>
+  <td> This department is not currently being used </td>
+<% else %>
+<h3>Employees in this department: </h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Role</th>
+        <th>Actions</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+    <%= for dp <- @department.employee do %>
+    <tr>
+      <td><%= dp.last_name %></td>
+      <td><%= dp.first_name %></td>
+      <td><%= dp.role.name %></td>
+      <td>
+        <span><%= link "Show", to: Routes.employee_path(@conn, :show, dp) %></span>
+        <span><%= link "Edit", to: Routes.employee_path(@conn, :edit, dp) %></span>
+        <span><%= link "Delete", to: Routes.employee_path(@conn, :delete, dp), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+    <% end %>
+      
+
+  </tbody>
+</table>
+<% end %>
+</ul>
+
+<span><%= link "Edit", to: Routes.department_path(@conn, :edit, @department) %></span> |
+<span><%= link "Back", to: Routes.department_path(@conn, :index) %></span>
