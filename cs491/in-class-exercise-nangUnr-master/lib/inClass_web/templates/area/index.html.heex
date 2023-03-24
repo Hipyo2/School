@@ -1,0 +1,26 @@
+<h1>Areas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for area <- @areas do %>
+    <tr>
+      <td><%= area.name %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.area_path(@conn, :show, area) %></span>
+        <span><%= link "Edit", to: Routes.area_path(@conn, :edit, area) %></span>
+        <span><%= link "Delete", to: Routes.area_path(@conn, :delete, area), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Area", to: Routes.area_path(@conn, :new) %></span>

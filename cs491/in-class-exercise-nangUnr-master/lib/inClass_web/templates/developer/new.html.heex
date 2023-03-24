@@ -1,0 +1,5 @@
+<h1>New Developer</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.developer_path(@conn, :create)) %>
+
+<span><%= link "Back", to: Routes.developer_path(@conn, :index) %></span>
