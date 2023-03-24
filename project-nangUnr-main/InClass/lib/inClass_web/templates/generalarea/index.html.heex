@@ -1,0 +1,26 @@
+<h1>General Areas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for generalarea <- @generalareas do %>
+    <tr>
+      <td><%= generalarea.name %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.generalarea_path(@conn, :show, generalarea) %></span>
+        <span><%= link "Edit", to: Routes.generalarea_path(@conn, :edit, generalarea) %></span>
+        <span><%= link "Delete", to: Routes.generalarea_path(@conn, :delete, generalarea), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New General Area", to: Routes.generalarea_path(@conn, :new) %></span>

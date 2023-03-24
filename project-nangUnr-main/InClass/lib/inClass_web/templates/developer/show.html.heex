@@ -1,0 +1,77 @@
+<h1>Developer</h1>
+
+<ul>
+
+  <li>
+    <strong>First name:</strong>
+    <%= @developer.first_name %>
+  </li>
+
+  <li>
+    <strong>Last name:</strong>
+    <%= @developer.last_name %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @developer.email %>
+  </li>
+  <li>
+    <strong>Zipcode:</strong>
+    <%= @developer.zipcode %>
+  </li>
+  <li>
+    <strong>State:</strong>
+    <%= @developer.zipcodes["state_fullname"] %>
+  </li>
+  <li>
+    <strong>City:</strong>
+    <%= @developer.zipcodes["city"] %>
+  </li>
+  <%= render "form2.html", Map.put(assigns, :action, Routes.developer_path(@conn, :update, @developer)) %>
+    
+</ul>
+
+  <h1> Assignments: </h1>
+  
+  <tr>
+  <ol type = "1">
+  <%= for developer <- @developer.assignments do %>
+  <li>
+    <strong>Assignment:</strong>
+    <td><%= developer.name %></td>
+    <ul>
+        <li>
+          <strong>Task:</strong>
+          <td><%= developer.task.name %></td>
+        </li>
+        <li>
+          <strong>Description:</strong>
+          <td><%= developer.task.description %></td>
+        </li>
+        <li>
+          <strong>General Area:</strong>
+          <td><%= developer.task.generalarea.name %></td>
+          <%= link "Change General Area", to: Routes.task_path(@conn, :update, @developer) %>
+        </li>
+        <li>
+          <strong>Status:</strong>
+          <td><%= developer.status.name %></td>
+          <!--%= render "form3.html", Map.put(assigns, :action, Routes.status_path(@conn, :update, @developer.assignments.status)) %-->
+          <%= link "Change Status", to: Routes.assignment_path(@conn, :update, @developer) %>
+
+        </li>
+        <li>
+          <strong>Due Date:</strong>
+          <td><%= developer.due_date %></td>
+        </li>
+    </ul>
+  </li>
+  <% end %>
+  </ol>
+  </tr>
+
+
+<span><%= link "Edit", to: Routes.developer_path(@conn, :edit, @developer) %></span> |
+<span><%= link "Back", to: Routes.developer_path(@conn, :index) %></span>
+
