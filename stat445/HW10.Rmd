@@ -1,0 +1,357 @@
+---
+title: "Homework #10"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+The following R chunk is to reduce the size of plots. Please do not remove this chunk.
+```{r} 
+knitr::opts_chunk$set(warning = F, message = F, out.width = '50%') 
+```
+
+
+## Question 1
+
+
+Generate 20 pseudorandom numbers $u_1, u_2, \ldots, u_{20}$ using
+\[
+x_n = 172 x_{n-1}~~~~(\mbox{mod}~ 30,307) ~~~\mbox{and}~~~ u_n = x_n / 30,307
+\]
+with initial seed $x_0 = 17,218$.
+
+In this question, we don't need to save `x` as a vector because we only need $x_n$ to compute $u_n$.
+We don't need to keep $x_1,x_2,\ldots,x_n$ in order to compute $u_n$. 
+Thus, please make `x` as a scalar, not a vector.
+
+
+```{r error=T}
+n <- 20
+u <- rep(NA, n)  # to save random numbers
+
+x = 17218   # initialize x
+for(i in 1:n){
+  x <- (172*x) %% 30307   # compute x_i 
+  u[i] <- x/30307        # compute u_i
+}
+print(u)
+```
+
+This is the multiplicative congruential generator to generate uniform random numbers over [0,1].
+Did you get the numbers between 0 and 1?  If not, your code is wrong.
+
+
+## Question 2
+
+
+Consider a continuous random variable $X$ with the probability density function (pdf) given by
+
+\[
+f(x) = \left\{ \begin{array}{ll}
+3(x-1)^2    & \mbox{for $1 < x \leq 2$}\\
+0           & \mbox{otherwise}\end{array} \right.
+\]
+
+
+__(a)__  Find the cumulative distribution function of $X$. For this question, write your answers on paper.
+
+\[
+F(x) = \left\{ \begin{array}{ll}
+0       & \mbox{for }x \leq 1\\
+(x-1)^3   & \mbox{for }1 < x \leq 2\\\
+1       & \mbox{for }x > 2\end{array} \right.
+\]
+
+Recall that a cumulative distribution function for a continuous random variable $X$ is defined as
+\[
+F(x)=P(X\leq x)=\int_{-\infty}^x f(t)dt~~~~~\mbox{for}~~-\infty < x <\infty
+\]
+
+
+__(b)__  Find the inverse function $F_X^{-1}(u)$. Write your answers on paper.
+
+
+__(c)__  Using the inversion method, simulate 1000 random numbers from this pdf. (Please do not print out all numbers)
+
+
+```{r error=T}
+set.seed(2022)
+u <- runif(___, ___, ___)
+x <- _______________   
+
+head(x)
+```
+
+
+__(d)__  Draw a histogram of your random numbers generated in part (c). Use `freq=F` argument to get density on y-axis. 
+
+
+```{r error=T}
+
+```
+
+
+__(e)__  On the histogram you drew in part (d), add a probability density function of `X`. 
+You may see pages 65-66 in Chapter 13 and consider a similar approach. 
+
+
+```{r error=T}
+
+```
+
+
+## Question 3
+
+
+The Box–Muller transform is a random number sampling method for generating pairs of independent, standard, normally distributed (zero expectation, unit variance) random numbers, given a source of uniformly distributed random numbers. 
+
+If $U, V \sim Unif(0,1)$ are independent, then
+\[
+Z_1 = \sqrt{-2\log U} \cos(2\pi V)~~~\mbox{and}~~~
+Z_2 = \sqrt{-2\log U} \sin(2\pi V)
+\]
+are independent standard normal variables.
+
+
+__(a)__  By using the Box-Muller transform method, generate 1000 random numbers for $Z_1$ and $Z_2$, respectively.
+
+
+```{r error=T}
+set.seed(2022)
+U <-
+V <- 
+Z1 <-
+Z2 <-
+```
+
+
+__(b)__  To confirm that $Z_1$ and $Z_2$ are normally distributed, draw a QQ plot for $Z_1$ and $Z_2$, respectively.
+
+
+```{r error=T}
+
+```
+
+
+__(c)__  Draw a scatter plot of $Z_1$ versus $Z_2$ to see whether they are correlated or not. What is your conclusion?
+
+
+```{r error=T}
+
+```
+
+
+## Question 4
+
+
+In the Box-Muller transform, calculating sines and cosines can be expensive (in terms of the time required), but there is a version of the Box-Muller algorithm that avoids this problem.
+
+It can be easily achieved using a rejection method. 
+
+(1) Generate $U, V \sim Unif(-1,1)$ independently. 
+
+(2) Accept the point $(U,V)$ if it is inside the unit circle; that is, if $U^2 + V^2 < 1$. Otherwise, return to Step 1
+
+(3) Set $W = \sqrt{\displaystyle\frac{-2\log(U^2+V^2)}{U^2+V^2}}$.
+
+(4) Return $X=UW$ and $Y=VW$.
+
+
+__(a)__  Write a function called `boxmuller` to perform the modified Box-Muller transform by using a rejection method.
+
+
+```{r error=T}
+boxmuller <- function(___){
+  
+}
+```
+
+
+__(b)___  By using `boxmuller` function defined in part (a), generate 1000 random numbers for $X$ and $Y$, respectively.
+
+
+```{r error=T}
+set.seed(2022)
+
+```
+
+
+__(c)__  Calculate the sample mean and variance of $X$ and $Y$, respectively. 
+
+
+```{r error=T}
+
+```
+
+
+__(d)__  Compute the sample correlation coefficient between $X$ and $Y$ using `cor()` function.
+
+
+```{r error=T}
+
+```
+
+
+## Question 5 
+
+
+Let $f(x) = (\sin x)^2$ for $0 < x < 2\pi$.
+
+
+__(a)__  Graph the function.
+
+
+```{r error=T}
+
+```
+
+
+__(b)__  Use Monte Carlo integration to find the area under $f(x)$ on the range
+$0 < x < 2\pi$.
+
+
+```{r error=T}
+
+```
+
+
+__(c)__  Let's define $g(x) = f(x)/\pi$. 
+That is, a probability density function $g(x) = \displaystyle\frac{(\sin x)^2}{\pi}$ for $0 < x < 2\pi$.
+
+Using the rejection method, write a function to generate random values from the density $g(x)$ for $0 < x < 2\pi$.
+
+The function should take a single argument specifying how many samples are required.
+
+
+```{r error=T}
+
+```
+
+
+__(d)__  Use your function defined in part (c) to draw 1000 samples, and save them as `x`. 
+
+
+```{r error=T}
+
+```
+
+
+__(e)__  Draw a histogram of `x` and add a graph of $g(x)$ on it.
+
+
+```{r error=T}
+
+```
+
+
+## Question 6
+
+
+__(a)__  Compute a Monte Carlo estimate of
+\[
+\int_0^{\pi/3} \sin(t) dt
+\]
+
+
+```{r error=T}
+set.seed(2022)
+
+```
+
+
+For your information, the exact value of the integral can be found by using `integrate()` function. Did you get a similar result?
+
+```{r error=T}
+integrate(function(x) sin(x), 0, pi/3)
+```
+
+
+__(b)__  Use Monte Carlo integration to estimate the following double integral.
+
+\[
+\int_0^5 \int_0^2 e^{-(x+y)^2}(x+y)^2 dx dy
+\]
+
+
+```{r error=T}
+set.seed(2022)
+
+```
+
+
+## Question 7
+
+
+Consider $f(x) = x^3 -2x^2 +x -1$. 
+
+
+__(a)__  Use the fixed-point method to find the fixed point of $f$. Set $x_0=3$.
+
+You may use `fixedpoint()` function defined in the lecture note as below.
+
+```{r}
+fixedpoint <- function(g, x0, tol = 1e-9, max.iter = 100) {
+  # do first iteration
+  xold <- x0
+  xnew <- g(xold)
+  iter <- 1
+  cat("At iteration", iter, ", x =", xnew, "\n")
+
+  # continue iterating until stopping conditions are met
+  while ((abs(xnew-xold) > tol) && (iter < max.iter)) {
+    xold <- xnew
+    xnew <- g(xold)
+    iter <- iter + 1
+    cat("At iteration", iter, ", x =", xnew, "\n")
+  }
+  # output depends on success of algorithm
+  if (abs(xnew-xold) > tol) {
+    cat("Algorithm failed to converge\n")
+    return(NULL)
+  } else {
+    cat("Algorithm converged\n")
+    return(xnew)
+  }
+}
+```
+
+
+```{r error=T}
+
+
+```
+
+
+__(b)__  Use the Newton-Raphson method to find the root of $f(x)$. Set $x_0=3$.
+
+You may use `newtonraphson()` function defined in the lecture note as below.
+
+```{r}
+newtonraphson <- function(myfun, x0, tol = 1e-9, max.iter = 100) {
+  # initialize
+  x <- x0
+  fs <- myfun(x)
+  iter <- 0
+  # continue iterating until stopping conditions are met
+  while ((abs(fs[1]) > tol) && (iter < max.iter)) {
+    x <- x - fs[1]/fs[2]
+    fs <- myfun(x)
+    iter <- iter + 1
+    cat("At iteration", iter, ", x =", x, "\n")
+  }
+  # output depends on success of algorithm
+  if (abs(fs[1]) > tol) {
+    cat("Algorithm failed to converge\n")
+    return(NULL)
+  } else {
+    cat("Algorithm converged\n")
+    return(x)
+  }
+}
+```
+
+
+```{r error=T}
+
+
+```

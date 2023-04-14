@@ -1,0 +1,373 @@
+---
+title: "Homework #5"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+## Question 1  
+
+
+Consider the following variable `x`:
+
+```{r error=T} 
+x <- c(13563,-14156,-14319,16981,12921,11979,9568,8833,-12968,8133)
+```
+
+
+__(a)__  Calculate $x^{75}$ and save the output as `x2`.
+
+```{r error=T} 
+x2 <- x^75
+x2
+```
+
+
+__(b)__  Check whether each element of `x2` is infinite or not.
+
+```{r error=T} 
+x2 == Inf
+```
+
+
+__(c)__  Print out all elements of `x2` that are not infinite.
+
+```{r error=T} 
+x2[which(x2 != Inf)]
+```
+
+
+__(d)__  Print out all elements of `x2` excluding those that result in negative infinity.
+
+```{r error=T} 
+x2[which(x2 != -Inf)]
+```
+
+
+## Question 2
+
+
+__(a)__  Define the following matrix as `Y`.
+
+\[
+\mathbf{Y} =
+\left(\begin{array}{rrrr}
+77875    & 27551    & 23764    & -36478\\
+-35466   & -73333   & 36599    & -70585\\
+-39803   & 55976    & 76694    &  47032
+\end{array} \right)
+\]
+
+
+```{r error=T} 
+Y <- matrix(c(77875,27551,23764,-36478,-35466,-73333,36599,-70585,-39803,55976,76694,47032), 3, 4, byrow = T)
+Y
+```
+
+__(b)__  Raise `Y` to a power of 65 and divide by infinity. Save the output as `Y2`.
+
+```{r error=T} 
+Y2 <- ((Y^65)/Inf)
+Y2
+```
+
+
+__(c)__  Identify the dimension-specific indexes of the entries of `Y2` that are `NaN`.
+
+```{r error=T} 
+which(is.nan(Y2), arr.ind = T)
+```
+
+
+__(d)__  Raise `Y` to a power of 67 and save it as `Y3`. 
+
+```{r error=T} 
+Y3 <- Y^67
+Y3
+```
+
+
+__(e)__  Find the values of `Y3` that are either negative infinity OR finite.
+
+```{r error=T} 
+Y3[which(Y3 == -Inf | Y3 != Inf)]
+```
+
+
+## Question 3
+
+
+Consider the following variable `z`.
+
+```{r error=T} 
+z <- c(4.3, 2.2, NULL, 2.4, NaN, 3.3, 3.1, NULL, 3.4, NA)
+```
+
+
+__(a)__  Find the index positions of `z` that are `NaN`.
+
+```{r error=T} 
+which(is.nan(z))
+```
+
+
+__(b)__  Find the index positions of `z` that are `NA`.
+
+```{r error=T} 
+which(is.na(z) & !is.nan(z))
+```
+
+
+__(c)__  Find the index positions of `z` that are `NULL`.
+
+```{r error=T} 
+z
+is.null(z)
+```
+
+
+## Question 4
+
+
+__(a)__  Read `HW5_Q4.txt` file and save the data frame as `Q4`.
+
+```{r error=T} 
+Q4 <- read.table("C:\\Users\\jmmna\\Downloads\\HW5_Q4.txt", header = T)
+head(Q4)
+```
+
+
+__(b)__  Calculate the means of each variable in `Q4` and save the output as `a`. (Use a single R command)
+ 
+```{r error=T} 
+a <- colMeans(Q4)
+```
+
+
+__(c)__  Calculate the sums of each variable in `Q4` and save the output as `b`. (Use a single R command)
+
+```{r error=T} 
+b <- colSums(Q4)
+```
+
+
+__(d)__  Create a matrix `d` in which the first row is `a` and the second row is `b`.
+
+```{r error=T} 
+d <- matrix(c(a,b),2,5)
+d
+```
+
+
+__(e)__  Save `d` to a text file `Q4_output.txt`. The entries in the text file must be exactly the same as 
+
+```{r eval=F} 
+-20.64275 179.46202 311.371 4.6204 33.418
+-20642.75 179462.02 311371 4620.4 33418
+```
+
+
+```{r error=T} 
+write.table(d,"C:\\Users\\jmmna\\Downloads\\Q4_output.txt",row.names = F, col.names = F)
+```
+
+
+__(f)__  Round a variable `long` in `Q4` to one decimal place and print out the first six values.  (Please do not print out all values)
+
+```{r error=T} 
+head(round(Q4$long,1))
+```
+
+
+__(g)__  Round a variable `long` in `Q4` to the smallest integer not less than the corresponding elements of `long`, and print out the first six values.  (Please do not print out all values)
+
+```{r error=T} 
+head(ceiling(Q4$long))
+```
+
+
+__(h)__  Find the number of rows in `Q4`. Your output should be a scalar. 
+
+```{r error=T} 
+nrow(Q4)
+```
+
+
+__(i)__  Note that `Q4` has 1000 rows and 5 columns. By using `all.equal` function, check whether your output in (h) is the same as 1000 or not. 
+
+```{r error=T} 
+all.equal(nrow(Q4), 1000)
+```
+
+
+__(j)__  By using `identical` function, check whether your output in (h) is the same as 1000 or not. 
+
+```{r error=T} 
+identical(nrow(Q4), 1000)
+```
+
+
+__(k)__  By using `isTRUE` function and a relational operator, check if your output in (h) is equal to 1000. 
+
+```{r error=T} 
+isTRUE(nrow(Q4) == 1000)
+```
+
+
+__(l)__  Check if **all** elements of `lat` in a data frame `Q4` are smaller than 0. Your output must be a single logical value. 
+
+```{r error=T} 
+all(Q4$lat < 0)
+```
+
+
+__(m)__  Check if **at least one** of elements of `lat` in a data frame `Q4` are smaller than 0. Your output must be a single logical value. 
+
+```{r error=T} 
+any(Q4$lat < 0)
+```
+
+
+## Question 5
+
+
+`HW5_Q5.txt` file has daily air quality measurements in New York from May to September in 1973 with the following six variables:
+
+[,1]	Mean ozone in parts per billion from 1300 to 1500 hours
+
+[,2]	Solar radiation in Langleys in the frequency band 4000–7700 Angstroms from 0800 to 1200 hours
+
+[,3]	Average wind speed in miles per hour at 0700 and 1000 hours 
+
+[,4]	Maximum daily temperature in degrees Fahrenheit
+
+[,5]	Month (1--12)
+
+[,6]	Day of month (1--31)
+
+
+__(a)__  Read `HW5_Q5.txt` file and save the data frame as `Q5`.
+
+```{r error=T} 
+Q5 <- read.table("C:\\Users\\jmmna\\Downloads\\HW5_Q5.txt")
+head(Q5)
+```
+
+
+__(b)__  Using `which.max` or `which.min` function, find the date (Month and Day) with the highest average wind speed recorded.
+
+```{r error=T} 
+Q5[which.max(Q5[,3]), c(5,6)]
+```
+
+
+__(c)__  For each day, check whether the maximum daily temperature was higher than 80 or not. Your output should be a logical valued vector.
+
+```{r error=T} 
+Q5[,4] > 80
+```
+
+
+__(d)__  Using `sum` function, find the number of days on which the maximum daily temperature was higher than 80. (Hint: Use the R code from part c)
+
+```{r error=T} 
+sum(Q5[,4] > 80)
+```
+
+
+__(e)__  Calculate the average of mean ozone. Exclude missing values from your calculation. (Hint: See Chapter 6)
+
+```{r error=T} 
+mean(which(!is.na(Q5[,1])))
+```
+
+
+__(f)__  Replace all missing values in mean ozone with 0, and then calculate the average of mean ozone again.
+
+```{r error=T} 
+Q5[which(is.na(Q5[,1])),1] = 0
+mean(Q5[,1])
+```
+
+
+## Question 6
+
+
+`HW5_Q6.csv` has two variables: student name (`Name`) and their class standing (`Level`) in Stat 445/645 class.
+
+
+__(a)__  Read `HW5_Q6.csv` file and save the data frame as `Q6`.
+
+```{r error=T} 
+Q6 <- read.table("C:\\Users\\jmmna\\Downloads\\HW5_Q6.csv", header = T,sep = ",")
+```
+
+
+__(b)__  Print out the first six observations of `Q6`.
+
+```{r error=T} 
+head(Q6)
+```
+
+
+__(c)__  Identify all the unique values in a variable `Level`.
+
+```{r error=T} 
+unique(Q6$Level)
+```
+
+
+__(d)__  Find the number of students for each class standing by using a single R command.
+
+```{r error=T} 
+table(Q6$Level)
+```
+
+
+## Question 7
+
+
+Three students, Jane, Mark, and Anne took six exams. We recorded their exam scores as follows:
+
+```{r error=T} 
+Jane <- c(51,59,63,84,72,24)
+Mark <- c(81,97,60,100,0,54)
+Anne <- c(94,31,25,50,51,46)
+```
+
+
+__(a)__  Find the highest exam score for each exam and produce a vector as a result. (Do not find the highest exam score respectively by using several R codes. Use a single R command.)
+
+```{r error=T} 
+pmax(Jane,Mark,Anne)
+```
+
+
+__(b)__  We define a new data frame `Q7` as follows:
+
+```{r error=T} 
+Q7 <- as.data.frame(rbind(Jane, Mark, Anne))
+colnames(Q7) <- c("Stat 352", "Stat 461", "Stat 467", "Stat 452", "Stat 445", "Stat 453")
+Q7
+```
+
+In `Q7`, find the index of the highest exam score for each student (row). Then, your output should be a $3 \times 1$ vector. 
+
+```{r error=T} 
+max.col(Q7)
+```
+
+
+__(c)__  Using the code in part b, find the course name with the highest exam score for each student. Your output should be a $3 \times 1$ character vector. 
+
+```{r error=T} 
+names(Q7)[max.col(Q7)]
+```
+
+
+__(d)__  Find the course name in which the largest number of students received the highest exam score. (in other words, which course had the easiest exam?)
+
+```{r error=T} 
+which.max(table(names(Q7)[max.col(Q7)]))
+```
+

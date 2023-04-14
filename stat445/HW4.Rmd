@@ -1,0 +1,478 @@
+---
+title: "Homework #4"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+## Question 1  
+
+
+__(a)__  Create a $3\times 4$ matrix `x` using the following vector of 18 values: `c(10,5,1,4,7,4,3,3,1,3,4,3)`.
+
+```{r error=T} 
+x = matrix(c(10,5,1,4,7,4,3,3,1,3,4,3),3,4)
+print(x)
+```
+
+
+__(b)__  Using `x`, identify the dimension-specific index positions of elements that are either 3 OR 4.
+
+```{r error=T} 
+which(x == 3 | x == 4, arr.ind = T)
+
+```
+
+
+__(c)__  Replace all elements in `x` that are less than 3 OR greater than or equal to 7 with the value 100.
+
+```{r error=T} 
+x[which(x < 3 | x >= 7)] = 100
+print(x)
+
+```
+
+
+## Question 2
+
+
+Suppose that you are leading a research team of five data analysts and that you want to evaluate their performance. 
+To do this, you track their speed, evaluate each analyst as `"slow"`, `"medium"` or `"fast"`, and save the results in `speed_vector`.
+
+
+__(a)__  Assign `speed` a vector with 5 entries, one for each analyst. Each entry should be either `"slow"`, `"medium"`, or `"fast"`. 
+Analyst 1 is medium, Analyst 2 is slow, Analyst 3 is slow, Analyst 4 is medium, and Analyst 5 is fast.
+
+```{r error=T} 
+speed <- c("medium","slow","slow","medium","fast")
+print(speed)
+```
+
+
+__(b)__  The categories of `speed` have a natural ordering. Convert `speed` to an ordered factor vector.
+
+```{r error=T} 
+speed <- factor(speed, ordered = T, levels = c("slow","medium","fast"))
+print(speed)
+```
+
+
+__(c)__  Let us summarize the performance rating of the five analysts. Find how many analysts received the rating of `"slow"`, `"medium"`, and `"fast"`, respectively, by using an R function.
+
+```{r error=T} 
+summary(speed)
+
+```
+
+
+__(d)__  Having a bad day at work, Analyst 2 enters your office and starts complaining that Analyst 5 is slowing down the entire project. 
+To check if his statement is true, you decide to compare the performance rating of Analyst 2 to that of Analyst 5. 
+Is Analyst 2 faster than Analyst 5? Use a relational operator.
+
+```{r error=T} 
+speed[2] > speed[5]
+
+```
+
+
+## Question 3
+
+
+In a small town, we recorded the ages of COVID-19 patients as below. 
+
+```{r} 
+age <- c(50,34,63,23,75,23,12,45,3,34,64,43,13,66,34,45,46,49,23,63,88)
+```
+
+Instead of actual ages, we will use the following classification of age groups. 
+
+Group 1: younger than 10, Group 2: 10-19, Group 3: 20-29, Group 4: 30-39, 
+Group 5: 40-49, Group 6: 50-59, Group 7: 60-69, Group 8: 70-79, Group 9: 80 or older
+
+Using `cut` function, save the age group into `age_grouped`.
+
+```{r error=T} 
+#closed parenthesis on right, open parenthesis on left
+age_grouped <- cut(age, breaks = c(0,10,20,30,40,50,60,70,80,Inf), right = FALSE)
+print(age_grouped)
+```
+
+
+## Question 4
+
+
+__(a)__  We have the following variables: `my_numeric`, `my_character`, `my_logical`.
+
+```{r error=T} 
+my_numeric <- 42
+my_character <- "some text"
+my_logical <- TRUE
+```
+
+Change `my_numeric` to a character variable, `my_character` to a logical variable, `my_logical` to a numeric variable.
+
+```{r error=T} 
+as.character(my_numeric)
+as.logical(my_character)
+as.numeric(my_logical)
+
+```
+
+
+__(b)__  If you got an error message or NA in part (a), explain why.
+
+You get an error message because there is no conversion from some text to a logical value of TRUE or FALSE. It can only convert to logical if R knows what it means. For example, "TRUE" or "T" can be converted from character to logical but words like "some text" cannot be converted since R does not know what "some text" means.
+
+## Question 5
+
+
+In this question, we will use a data set `mtcars` that is already stored in R. 
+To use such a data set, we type
+
+```{r} 
+data(mtcars)
+```
+
+This data comprises fuel consumption and some aspects of automobile design and performance for several automobiles.  
+To see the first few observations, we use `head()` function:
+
+```{r} 
+head(mtcars)
+```
+
+
+__(a)__  To see the structure of `mtcars`, use `str()` function.
+
+```{r error=T} 
+str(mtcars)
+
+```
+ 
+ 
+__(b)__  From part (a), find the number of observations ($n$) and the number of variables ($p$). Complete the following sentence.
+
+The number of observations is 32 and the number of variables is 11.
+
+
+__(c)__  Check if `mtcars` is a vector, matrix, array, factor, or data frame. 
+
+```{r error=T} 
+is.vector(mtcars)
+is.matrix(mtcars)
+is.array(mtcars)
+is.factor(mtcars)
+is.data.frame(mtcars)
+
+```
+
+
+## Question 6
+
+
+You want to construct a data set that describes the main characteristics of eight planets in our solar system. 
+The main features of a planet are:
+
+`name`: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+
+`type`: The type of planet (Terrestrial or Gas Giant)
+
+`diameter`: The planet's diameter relative to the diameter of the Earth.
+
+`rotation`: The planet's rotation across the sun relative to that of the Earth.
+
+`rings`: If the planet has rings or not (TRUE or FALSE).
+
+```{r} 
+name <- c("Mercury", "Venus", "Earth", 
+          "Mars", "Jupiter", "Saturn", 
+          "Uranus", "Neptune")
+type <- c("Terrestrial planet", 
+          "Terrestrial planet", 
+          "Terrestrial planet", 
+          "Terrestrial planet", "Gas giant", 
+          "Gas giant", "Gas giant", "Gas giant")
+diameter <- c(0.382, 0.949, "ten", 0.532, 
+              11.209, 9.449, 4.007, 3.883)
+rotation <- c(58.64, -243.02, 1, 1.03, 
+              0.41, 0.43, -0.72, 0.67)
+rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+```
+
+
+__(a)__  Construct a data frame `planets` with `name`, `type`, `diameter`, `rotation`, and `rings`, in this order.
+
+```{r error=T} 
+planets <- data.frame(name, type, diameter, rotation, rings)
+planets2 = data.frame(planets, name, type, diameter, rotation, rings)
+print(planets)
+print(planets2)
+mylist = list(planets,planets2,name,type,diameter,rotation,rings)
+print(mylist)
+df = data.frame(mylist)
+df = data.frame(diag(3))
+df
+as.list(planets)
+```
+
+From now on, we will use only a data frame `planets`. To avoid any confusion, let's remove the variables `name`,`type`, `diameter`, `rotation`, `rings`.
+For example, we will be able to use `planets$name`, but not `name`, after removing the globally defined variables.
+
+```{r} 
+rm(list=c("name","type", "diameter", "rotation", "rings"))
+```
+
+
+__(b)__  Use `str()` function to investigate the structure of `planets`.
+
+```{r error=T} 
+str(planets)
+
+```
+
+
+__(c)__  From part (b), determine if each variable is numeric, character, or logical. 
+
+`name` is a character variable. 
+
+`type` is a character variable. 
+
+`diameter` is a numeric variable. 
+
+`rotation` is a numeric variable. 
+
+`rings` is a logical variable. 
+
+
+__(d)__  Find the diameter of Mercury. (Use R code)
+
+```{r error=T} 
+planets$diameter[planets$name == "Mercury"]
+
+```
+
+
+__(e)__  Find all data on Mars (the fourth row).
+
+
+```{r error=T} 
+planets[planets$name == "Mars",]
+
+```
+
+
+__(f)__  Find the first five values in the `diameter`.
+
+```{r error=T}  
+head(planets$diameter, 5)
+
+```
+
+
+__(g)__  Use `$` sign to select the `rings` variable from `planets`.
+
+```{r error=T} 
+planets$rings
+
+```
+
+
+__(h)__  Some planets in our solar system have rings and others do not. Unfortunately you cannot recall their names. 
+Find the names of the planets that have rings by using square brackets and part (g).
+
+```{r error=T} 
+planets$name[planets$rings]
+
+```
+
+
+__(i)__  In part (h), we were interested in only names. Now let us find all information available (that is, all five variables) for the planets with rings. Complete the following R code.
+
+```{r error=T}  
+planets[planets$rings,   ]
+```
+
+
+__(j)__  Using `subset` function, repeat part (i).
+
+```{r error=T}  
+subset(planets, planets$rings)
+```
+
+
+__(k)__  Using `subset` function, find the planets that have a diameter smaller than Earth. That is, find planets with `diameter` < 1. 
+
+```{r error=T} 
+subset(planets, planets$diameter < planets$diameter[planets$name == "Earth"])
+
+```
+
+
+__(l)__  Arrange a data frame `planets` such that it starts with the smallest planets and ends with the largest one. That is, arrange `planets` in ascending order of `diameter`. 
+
+```{r error=T}  
+planets[order(planets$diameter, decreasing = FALSE), ]
+
+```
+
+
+## Question 7
+
+
+A library `MASS` has a data set `road` with the annual deaths in road accidents for half the US states. 
+
+```{r} 
+library(MASS)
+head(road)  # see the first few observations
+```
+
+Rows show 'state' name.
+Columns are
+`deaths` number of deaths.
+`drivers` number of drivers (in 10,000s).
+`popden` population density in people per square mile.
+`rural` length of rural roads, in 1000s of miles.
+`temp` average daily maximum temperature in January.
+`fuel `fuel consumption in 10,000,000 US gallons per year.
+     
+
+__(a)__  Find the number of observations ($n$) and the number of variables ($p$). 
+
+```{r error=T} 
+str(road)
+
+```
+The number of observations is 26 and the number of variables is 6.
+
+__(d)__  Rearrange `road` in descending order of `deaths` and save it as `road_by_deaths`. Print out the first six observations of `road_by_deaths`.
+
+```{r error=T} 
+road_by_deaths = road[order(road$deaths, decreasing = TRUE),]
+head(road_by_deaths)
+
+```
+
+
+__(c)__  Find a state that has the highest annual fuel consumption. 
+(Hint: Arrange `road` in descending order of `fuel`) 
+
+```{r error=T} 
+road_by_fuel = road[order(road$fuel,decreasing = TRUE),]
+rownames(head(road_by_fuel,1))
+
+```
+
+
+__(d)__  Find the number of drivers in the state with the lowest number of deaths. 
+(Hint: Arrange `road` in ascending order of `deaths`) 
+
+```{r error=T} 
+road_by_deaths_asc = order(road$deaths)
+road$drivers[road_by_deaths_asc[1]]
+```
+
+
+## Question 8 
+
+
+Suppose we have two data frames, the first containing information on plant life forms and the second containing information of time of flowering. 
+Both data frames contain variables for genus name and species name.
+
+```{r} 
+lifeforms <- data.frame(Genus=c("Acer", "Acer", "Ajuga", "Conyza", "Lamium"), 
+                        species=c("platanoides", "palmatum", "reptans", "sumatrensis", "album"),
+                        lifeform=c("tree","tree", "herb", "annual", "herb"))
+
+flowering <- data.frame(Genus=c("Acer", "Ajuga", "Brassica", "Chamerion", "Conyza", "Lamium"), 
+                        species=c("platanoides", "reptans", "napus", "angustifolium", "bilbaoana", "album"),
+                        flowering=c("May","June", "April", "July", "August", "January"))
+print(lifeforms)
+print(flowering)
+```
+
+We produced a single data frame showing information on both life form and flowering time. 
+We included all the species, with missing values (NA) inserted when flowering times or life forms are not known,
+
+```{r eval=F} 
+      Genus       species lifeform flowering
+1      Acer      palmatum     tree      <NA>
+2      Acer   platanoides     tree       May
+3     Ajuga       reptans     herb      June
+4  Brassica         napus     <NA>     April
+5 Chamerion angustifolium     <NA>      July
+6    Conyza     bilbaoana     <NA>    August
+7    Conyza   sumatrensis   annual      <NA>
+8    Lamium         album     herb   January
+```
+
+Use `merge` function to get the output as above.
+
+```{r error=T} 
+merge(lifeforms,flowering, all = TRUE)
+
+```
+
+
+## Question 9
+
+
+__(a)__  Create a list `mylist` that contains, `var1`, `var2`, `var3`, and `var4`, in this order.
+
+`var1`: a sequence of 20 evenly spaced numbers between -4 and 4.
+
+`var2`: a $3\times 3$ matrix with logical values as follows:
+
+\[
+\left(\begin{array}{rrr}
+F & T & T \\ T & F & T \\ T & F & F
+\end{array} \right)
+\]
+
+`var3`: a character vector with the two strings `"STAT 446"` and `"MATH 646"`.
+
+`var4`: an ordered factor vector containing the observations `c("LOW", "MED", "LOW", "MED", "MED", "HIGH")`.
+The levels have a magnitude order with `"LOW"` < `"MED"` < `"HIGH"`.
+
+```{r error=T} 
+var1 <- seq(-4,4,length.out = 20)
+var2 <- matrix(c(F,T,T,T,F,F,T,T,F), 3,3)
+var3 <- c("STAT 446", "MATH 646")
+var4 <- factor(c("LOW", "MED", "LOW", "MED", "MED", "HIGH"), ordered = T, levels = c("LOW", "MED", "HIGH"))
+mylist <- list(var1 = var1,var2 = var2,var3 = var3,var4 = var4)
+names(mylist) <- c("var1", "var2", "var3", "var4")  # named list
+print(mylist)
+rm(list=c("var1", "var2", "var3", "var4"))  # for study purpose, remove variables and use only mylist
+```
+
+
+__(b)__  Find all values from `var1` that are greater than 1. 
+
+```{r error=T} 
+mylist$var1[mylist$var1 > 1]
+
+```
+
+
+__(c)__  Extract the second row of the second and third columns of `var2`.
+
+```{r error=T} 
+mylist$var2[2,2:3]
+
+```
+
+
+__(d)__  Change the second element of `var3` to `"STAT 646"`.
+
+```{r error=T} 
+mylist$var3[2] = "STAT 646"
+print(mylist$var3)
+
+```
+
+
+__(e)__  Using `which`, determine which indices in `var4` are assigned the `"MED"` level.
+
+```{r error=T} 
+which(mylist$var4 == "MED")
+
+```
+

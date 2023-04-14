@@ -1,0 +1,576 @@
+---
+title: "Homework #3"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+## Question 1  
+
+
+Consider a matrix `A` with the following R output:
+
+```{r eval=F} 
+     [,1] [,2]
+[1,]    1    2
+[2,]    1    1
+```
+
+
+__(a)__  Define a matrix `A`.
+
+```{r error=T} 
+A <- matrix(c(1,1,2,1),2,2)
+print(A)
+
+```
+
+
+__(b)__  Find the eigenvalues of `A`. (that is, $\lambda_1$ and $\lambda_2$)
+
+```{r error=T} 
+E <- eigen(A)
+E$values
+
+```
+
+
+__(c)__  Print the largest eigenvalue of `A`. (Use R function)
+
+```{r error=T} 
+print(E$values[1])
+
+```
+
+
+__(d)__  Show that $|\mathbf{A}-\lambda\mathbf{I}|=0$ for each eigenvalue $\lambda$.
+
+```{r error=T}
+#Needed to be rounded since results are very close to 0 but not 0
+round(det(A - (E$values[1]*diag(2)),2))
+
+round(det(A - (E$values[2]*diag(2)),2))
+
+
+```
+
+
+__(e)__  Find the eigenvectors of `A`.  (that is, $\mathbf{x}_1$ and $\mathbf{x}_2$) 
+
+```{r error=T} 
+E$vectors
+
+```
+
+
+__(f)__ Show that $\mathbf{Ax}=\lambda\mathbf{x}$ for each eigenvalue/eigenvector pair.
+
+```{r error=T} 
+(A%*%E$vectors[,1])==(E$values[1]*E$vectors[,1])
+
+#It was resulting in FALSE without modifying the significant figures so I changed the sig figs to 8
+signif((A%*%E$vectors[,2]),8) == signif((E$values[2]*E$vectors[,2]),8)
+
+```
+
+
+## Question 2
+
+
+Consider an array `B` with the following R output:
+
+```{r eval=F} 
+, , 1
+
+     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,]  4.8  4.4  4.0  3.6  3.2  2.8
+[2,]  4.7  4.3  3.9  3.5  3.1  2.7
+[3,]  4.6  4.2  3.8  3.4  3.0  2.6
+[4,]  4.5  4.1  3.7  3.3  2.9  2.5
+
+, , 2
+
+     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,]  2.4  2.0  1.6  1.2  0.8  0.4
+[2,]  2.3  1.9  1.5  1.1  0.7  0.3
+[3,]  2.2  1.8  1.4  1.0  0.6  0.2
+[4,]  2.1  1.7  1.3  0.9  0.5  0.1
+```
+
+Using `array` function, define the array `B`. 
+
+
+```{r error=T} 
+array(c(seq(4.8, 0.1, -0.1)), c(4,6,2))
+```
+
+
+## Question 3
+
+
+Suppose you have a fruit basket with five apples. You want to store the number of apples in a variable with the name `my_apples`.
+
+
+__(a)__  Assign the value 5 to the variable `my_apples` and print out the value of the variable `my_apples`.
+
+```{r error=T} 
+my_apples <- 5
+print(my_apples)
+
+```
+
+
+__(b)__  Every tasty fruit basket needs oranges, so you decide to add six oranges. Create the variable `my_oranges` and assign the value 6 to it. 
+
+```{r error=T} 
+my_oranges <- 6
+print(my_oranges)
+
+```
+
+
+__(c)__  You want to calculate how many pieces of fruit you have in total. Add the variables `my_apples` and `my_oranges` and assign the result of adding `my_apples` and `my_oranges` to a new variable `my_fruit`.
+
+
+```{r error=T} 
+my_fruit <- my_apples + my_oranges
+print(my_fruit)
+
+```
+
+
+__(d)__  If you run the following R code, you will get an error message. Explain why you get an error.
+
+```{r error=T} 
+my_apples <- 5 
+my_oranges <- "six" 
+my_fruit <- my_apples + my_oranges 
+```
+An error message appears because it is trying to add a numerical data type with a character data type. The types are incompatible with each other and causes an error.
+
+__(e)__  Adjust the code so that R knows you have 6 oranges and thus a fruit basket with 11 pieces of fruit.
+
+
+```{r error=T} 
+my_apples <- 5 
+my_oranges <- "six" <- "6"
+my_oranges <- as.numeric(my_oranges)
+my_fruit <- my_apples + my_oranges 
+my_fruit
+```
+
+
+## Question 4  
+
+
+Let's create a numeric vector, a character vector, and a logical vector.
+We have a numeric vector `ibm_stock` for IBM stock prices as shown below.
+Similarly, create a character vector `finance` with the finance-related words "stocks", "bonds", and "investments" in that order.
+Also, create a logical vector `logic` with TRUE, FALSE, TRUE in that order.
+
+```{r error=T} 
+ibm_stock <- c(159.82, 160.02, 159.84)
+print(ibm_stock)
+
+finance <- c("stocks", "bonds", "investments")
+print(finance)
+  
+logic <- c(T,F,T)
+print(logic)
+```
+
+
+## Question 5
+
+
+Let's study relational operators.
+
+
+__(a)__ Write R code to see if `TRUE` equals `FALSE`.
+
+```{r error=T} 
+TRUE == FALSE
+```
+
+
+__(b)__  Check if -6*14 is not equal to 17-101.
+
+```{r error=T} 
+(-6*14) != (17-101)
+
+```
+
+
+__(c)__  Check whether the strings `"useR"` and `"user"` are equal.
+
+```{r error=T} 
+"useR" == "user"
+
+```
+
+
+__(d)__  Let's compare logicals to numerics. Check if `TRUE` and 1 are equal.
+
+```{r error=T} 
+TRUE == 1
+
+```
+
+
+__(e)__  Check whether -6*5+2 is greater than or equal to -10+1.
+
+```{r error=T} 
+(-6*5+2) >= (-10+1)
+
+```
+
+
+__(f)__  Let's compare character strings. Check whether `"dog"` is smaller than `"Cats"`. R determines the 'greater than' relationship based on alphabetical order.
+
+```{r error=T} 
+"dog" < "Cats"
+
+```
+
+
+__(g)__  Check whether `TRUE` is greater than `FALSE`.
+
+```{r error=T} 
+TRUE > FALSE
+
+```
+
+
+## Question 6
+
+
+Let's study relational operators for vectors.
+
+You want to figure out whether your activity on social media platforms have paid off and decide to look at your results for LinkedIn and Facebook. 
+
+Suppose you have recorded the daily number of views your LinkedIn profile had the previous week and stored them in a vector, `linkedin`. 
+
+You also recorded the number of views your Facebook profile had the previous week and saved them in another vector, `facebook`. 
+
+Each of the vectors contains the number of profile views your LinkedIn and Facebook profiles had over the last seven days.
+A variable `days` shows the days of the week. 
+
+```{r} 
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+days <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+```
+
+
+__(a)__  On which days did the number of LinkedIn profile views exceed 15?
+
+```{r error=T} 
+days[linkedin > 15]
+
+```
+
+
+__(b)__  When was your LinkedIn profile viewed only 5 times or fewer?
+
+
+```{r error=T} 
+days[linkedin <= 5]
+
+```
+
+
+__(c)__  When was your LinkedIn profile visited more often than your Facebook profile?
+
+```{r error=T} 
+days[linkedin > facebook]
+
+```
+
+
+__(d)__  We saved the number of LinkedIn profile views on the first day (Sunday) as `first`.
+
+```{r error=T} 
+first <- linkedin[1]
+```
+
+Check whether `first` is less than 5 or greater than 10.
+
+```{r error=T} 
+(first < 5) & (first > 10)
+
+```
+
+
+__(e)__  Check whether `first` is greater than 15, but smaller than or equal to 20.
+
+```{r error=T} 
+(first < 20) & (first > 15)
+
+```
+
+
+## Question 7
+
+
+In this question, you will take a trip to Vegas, where you will learn how to analyze your gambling results using vectors in R. 
+
+
+__(a)__  Assign the value `"Go!"` to the variable `vegas`. Remember: R is case sensitive. 
+
+```{r error=T}  
+vegas <- "Go!"
+print(vegas)
+```
+
+
+__(b)__  You decide to summarize all the winnings and losses for the last week. You only played poker and roulette.
+
+For `poker`:
+
+On Monday you won \$140, Tuesday you lost \$50, Wednesday you won \$20, Thursday you lost \$120, Friday you won \$240
+
+For `roulette`:
+
+On Monday you lost \$24, Tuesday you lost \$50, Wednesday you won \$100, Thursday you lost \$350, Friday you won \$10
+
+Similar to `poker`, create the variable `roulette`.
+
+```{r error=T} 
+poker <- c(140, -50, 20, -120, 240)
+roulette <- c(-24,-50,100,-350,10)  
+```
+
+
+__(c)__  In `poker` and `roulette`, each vector element refers to a day of the week but it is hard to tell which element belongs to which day. It would be nice if you could show that in the vector itself.
+
+R code below names the elements in `poker` with the days of the week. Add code to do the same thing for `roulette`.
+
+```{r error=T} 
+names(poker) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(roulette) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+```
+
+
+__(d)__  In part (c), we typed the days of the week twice. 
+Being lazy, we may create a variable `days` that contains the days of the week, and then use it to name the elements of `poker` and `roulette`. 
+By doing this, we don't need to type the same character vectors twice but have an efficient code.
+
+```{r error=T} 
+days <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+names(poker) <-   days
+  
+names(roulette) <- days
+```
+
+
+__(e)__  Now you will try to understand what the overall profit or loss per day of the week was. The total daily profit is the sum of the profit/loss you realized on poker per day, and the profit/loss you realized on roulette per day.
+In R, this is just the sum of `roulette` and `poker`.
+
+Assign to the variable `total_daily` how much you won or lost on each day in total (poker and roulette combined).
+
+```{r error=T}  
+total_daily <- roulette + poker
+  
+print(total_daily)
+```
+
+
+__(f)__  In part (e), it looks like you had a mix of good and bad days. Then, you wonder if there may be a very tiny chance you have lost money over the week in total.
+
+A function that helps you to answer this question is `sum` in R. 
+It calculates the sum of all elements of a vector. 
+For example, to calculate the total amount of money you have lost/won with poker you do:
+
+```{r eval=F}  
+total_poker <- sum(poker)
+```
+
+Similarly, calculate the total amount of money that you have won/lost with roulette and assign to the variable `total_roulette`.
+
+Now that you have the totals for roulette and poker, you can calculate `total_week` (which is the sum of all gains and losses of the week).
+
+```{r error=T}  
+total_poker <- sum(poker)
+
+total_roulette <-  sum(roulette)
+
+total_week <- sum(total_poker,total_roulette)
+
+print(total_week)
+```
+
+
+__(g)__  In part (f), it seems like you lost money. A possible explanation might be that your skills in roulette are not as well developed as your skills in poker. So maybe your total gains in poker are higher than in roulette.
+
+Check if your total gains in poker are higher than for roulette by using a comparison. Simply print out the result of this comparison. 
+
+```{r error=T}  
+total_poker > total_roulette
+```
+
+
+__(h)__  Suppose that you won more money from poker. Thus, let's focus n poker from now on. 
+For better performance, you may investigate your earnings at the beginning of the working week compared to the end of it. 
+
+Assign the poker results of Monday and Tuesday to the variable `poker_start` by using square brackets.
+
+```{r error=T} 
+poker_start <- c(poker[1:2])
+
+print(poker_start)
+```
+
+
+__(i)__  Assign the poker results of Thursday and Friday to the variable `poker_end` by using square brackets.
+
+```{r error=T} 
+poker_end <- c(poker[4:5])
+
+print(poker_end)
+```
+
+
+__(j)__  We can use `mean` function to calculate the mean of a variable. For example, the following code calculates the mean of `x`.
+
+```{r eval=F} 
+mean(x)
+```
+
+Calculate the averages of the values in `poker_start` and `poker_end`, respectively, with `mean` function. 
+
+```{r error=T} 
+mean(poker_start)
+mean(poker_end)
+
+```
+
+
+__(k)__  Check whether your performance on poker at the beginning of the working week (Monday and Tuesday) was better than that at the end of the working week (Thursday and Friday) on average.
+
+```{r error=T} 
+mean(poker_start) > mean(poker_end)
+
+```
+
+
+__(l)__  Check which elements in `poker` are positive and assign this to `selection`.
+From `selection`, you can find whether you won (TRUE) or lost (FALSE) any money for each day. (that is, `selection` is a logical vector)
+
+```{r error=T} 
+selection <- (poker > 0)
+
+print(selection)
+```
+
+
+__(m)__  Use `selection` in square brackets to assign the amounts that you won on the profitable days to the variable `poker_winning_days`.
+
+```{r error=T} 
+poker_winning_days <- poker[selection == TRUE]
+
+print(poker_winning_days)
+```
+
+
+__(n)__  Redo part (m), but use only `poker` and square brackets. (Do not use a variable `selection`)
+
+```{r error=T} 
+poker_winning_days <- poker[poker > 0]
+
+print(poker_winning_days)
+```
+
+
+__(o)__  By using `-` sign, find the amounts how much you won or lost on Tuesday, Wednesday, and Thursday (that is, all days of the week except Monday and Friday). 
+
+```{r error=T} 
+poker[c(-1,-5)]
+```
+
+
+## Question 8
+
+
+We have three vectors of Apple, IBM, and Microsoft stock prices:
+
+```{r} 
+apple <- c(109.49, 109.90, 109.11, 109.95, 111.03, 112.12, 113.95, 113.30, 115.19, 115.19,115.82, 115.97, 116.64, 116.95, 117.06, 116.29, 116.52, 117.26, 116.76, 116.73, 115.82)
+
+ibm <- c(159.82, 160.02, 159.84, 160.35, 164.79, 165.36, 166.52, 165.50, 168.29, 168.51, 168.02, 166.73, 166.68, 167.60, 167.33, 167.06, 166.71, 167.14, 166.19, 166.60, 165.99)
+
+micr <- c(59.20, 59.25, 60.22, 59.95, 61.37, 61.01, 61.97, 62.17, 62.98, 62.68, 62.58, 62.30, 63.62, 63.54, 63.54, 63.55, 63.24, 63.28, 62.99, 62.90, 62.14)
+```
+
+
+__(a)__  Use `cbind` to column bind `apple`, `ibm`, and `micr` together, in that order, as `stocks`.
+
+```{r error=T} 
+stocks <- cbind(apple, cbind(ibm,cbind(micr)))
+print(stocks)
+```
+
+
+__(b)__  Use `rbind` to row bind the three vectors together, in the same order, as `stocks2`.
+
+```{r error=T} 
+stocks2 <- rbind(apple,rbind(ibm,rbind(micr)))
+print(stocks2)
+```
+
+
+__(c)__  Print the third row of `stocks`.
+
+```{r error=T} 
+print(stocks[3,])
+```
+
+
+__(d)__  Print the fourth and fifth rows of the `ibm` column of `stocks`.
+
+```{r error=T} 
+print(stocks[c(4,5), "ibm"])
+```
+
+
+__(e)__  Print the `apple` and `micr` columns from `stocks` using `c` function inside the brackets. 
+
+```{r error=T} 
+print(stocks[ ,c(1,3)])
+
+```
+
+
+__(f)__  Change the column names to `Apple`, `IBM`, and `Microsoft` in that order.
+
+```{r error=T} 
+colnames(stocks) <- c("Apple", "IBM", "Microsoft")
+print(stocks)
+
+```
+
+
+__(g)__  Find the sums of `Apple`, `IBM`, and `Microsoft` stock prices. Do not use `sum` function.
+
+```{r error=T} 
+colSums(stocks)
+```
+
+
+## Question 9
+
+
+To create the following R output:
+
+```{r eval=F} 
+STAT 445/645 
+Fall 2022
+```
+
+write the R code below.
+
+```{r error=T} 
+cat("STAT 445/645\nFall 2022")
+```
+

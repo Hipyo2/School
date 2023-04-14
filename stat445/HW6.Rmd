@@ -1,0 +1,349 @@
+---
+title: "Homework #6"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+
+## Question 1
+
+
+This famous `iris` data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. 
+
+
+```{r error=T} 
+head(iris)
+```
+
+
+__(a)__  Find what kind of species of iris we have in this data set.
+
+```{r error=T} 
+unique(iris$Species)
+```
+
+
+__(b)__  Using `with()` function, choose the values of petal length of iris setosa with sepal length greater than 5.
+
+```{r error=T} 
+iris2 <- with(iris,Petal.Length[Sepal.Length > 5 & Species == "setosa"])
+print(iris2)
+```
+
+
+__(c)__  We can choose Iris Setosa and Virginica by using `subset()` function as below:
+
+```{r eval=F} 
+subset(iris, Species=="setosa"|Species=="virginica")
+```
+
+Let us try another way. 
+Instead of `==` and `|` operators in the second argument, we can use `%in%` operator. 
+That is, check if `Species` is either `setosa` or `virginica` by using `%in%` operator.  
+
+```{r error=T} 
+myiris <- subset(iris, iris$Species %in% c("setosa", "virginica"))
+head(myiris)
+```
+
+
+## Question 2 
+
+
+Ten percent of the components manufactured by a certain process are defective. A component is chosen at random. 
+Let X = 1 if the component is defective, and X = 0 otherwise.
+
+Randomly choose five components by using `sample()` function and show whether they are defective or not (that is, whether the value of X is 1 or 0).
+
+```{r error=T} 
+set.seed(123)
+sample(c(0,1), 5, replace = T, prob = c(0.9,0.1))
+```
+
+
+## Question 3
+
+
+Alkaptonuria is a genetic disease that results in the lack of an enzyme necessary to break downhomogentisic acid. Some people are carriers of alkaptonuria, which means that they do not have the disease themselves, but they can potentially transmit it to their offspring.
+According to the laws of genetic inheritance, an offspring both of whose parents are carriers of alkaptonuria has probability 0.25 of being unaffected, 0.5 of being a carrier, and 0.25 of having the disease.
+
+Randomly choose 10 offspring of carriers of alkaptonuria, and show whether they are unaffected, a carrier, or have the disease.
+
+```{r error=T} 
+set.seed(123)
+sample(c("unaffected","carrier","diseased"), 10, replace = T, prob = c(0.25,0.5,0.25))
+```
+
+
+## Question 4
+
+
+Ten dice are rolled. 
+
+
+__(a)__  Show those ten outcomes.
+
+```{r error=T} 
+set.seed(123)
+diceRoll = sample(1:6, 10, replace = T)
+print(diceRoll)
+```
+
+__(b)__  Calculate the average of those ten outcomes.
+
+```{r error=T} 
+mean(diceRoll)
+```
+
+
+## Question 5
+
+
+In `HW6_1.csv` file, we have two variables: `Name` and `Level`.
+In `HW6_2.csv` file, we have two variables: `Name` and `Gender`.
+
+Read two data files: `HW6_1.csv` and `HW6_2.csv`. You may want to change the file paths.
+
+```{r error=T} 
+data_senior <- read.csv("C:\\Users\\jmmna\\Downloads\\HW6_1.csv")
+data_undergrad <- read.csv("C:\\Users\\jmmna\\Downloads\\HW6_2.csv")
+```
+
+
+__(a)__  For each student in `data_senior`, check whether they are also in the `data_undergrad` or not. Thus, your output must be a logical-valued vector.
+
+```{r error=T} 
+data_senior$Name %in% data_undergrad$Name
+```
+
+
+__(b)__  If a student name in `data_senior` also appears in `data_undergrad`, find its row position in `data_undergrad`.
+
+Since you need to check all students in `data_senior`, your output must be a vector. 
+
+```{r error=T} 
+match(data_senior$Name,data_undergrad$Name)
+```
+
+
+__(c)__  If a student name in `data_senior` also appears in `data_undergrad`, find their gender.
+Since you need to check all students in `data_senior`, your output must be a vector.
+You may use your code from part (b). 
+
+```{r error=T} 
+data_undergrad$Gender[match(data_senior$Name,data_undergrad$Name)]
+```
+
+
+__(d)__  Using your output in part (c), count how many male and female students we have, respectively.
+
+```{r error=T} 
+table(data_undergrad$Gender[match(data_senior$Name,data_undergrad$Name)])
+```
+
+
+## Question 6  
+
+
+__(a)__  We define the current stock price fo Microsoft as `micr`. In this question, we assume that it is 48.55.
+
+Fill in the `if` statement that first tests if `micr` is less than 55, and if it is, then prints `"Buy"`.
+
+
+```{r error=T} 
+micr <- 48.55
+
+if (micr < 55) {
+  print("Buy")
+}
+```
+
+
+__(b)__  Extend part (a) by adding an `else` statement that prints `"Do nothing!"`.
+
+
+```{r error=T} 
+micr <- 57.44
+
+if (micr < 55) {
+  print("Buy")
+}else{
+  print("Do nothing!")
+}
+```
+
+
+__(c)__  Extend part (b) by filling in the blanks to complete the following logic:
+
+* if `micr` is less than 55, print `"Buy"`.
+
+* if `micr` is greater than or equal to 55 AND less than 75, print `"Do nothing!"`.
+
+* if `micr` is greater than or equal to 75, print `"Sell!"`.
+
+
+```{r error=T} 
+micr <- 105.67
+
+if (micr < 55) {
+  print("Buy")
+} else if (micr >= 55 & micr < 75){
+  print("Do nothing!")
+} else if (micr >= 75) {
+  print("Sell!")
+}
+```
+
+
+__(d)__  In part (c), we define our strategy to buy, keep, or sell the Microsoft stock. 
+However, if we don't hold any stock, it is impossible to sell the stock. 
+Thus, we will add one more condition before we decide to sell a stock. 
+
+We define the number of the Microsoft stocks we have as `shares`. 
+
+* If the stock price is greater than or equal to 75 AND `shares` is greater than or equal to 1, print `"Sell!"`.
+
+* If the stock price is greater than or equal to 75 BUT `shares` is less than 1, print `"Not enough shares to sell!"`.
+
+
+```{r error=T} 
+micr <- 105.67
+shares <- 1
+
+if (micr < 55) {
+  print("Buy")
+} else if (micr >= 55 & micr < 75){
+  print("Do nothing!")
+} else if (micr >= 75) {
+  if(shares >= 1){
+    print("Sell")
+  } else {
+    print("Not enough shares to sell!")
+  }
+}
+
+```
+
+
+## Question 7
+
+
+Download `HW6_3.txt` file from Canvas. 
+In `HW6_3.txt` file, there are three variables: `date`, `apple`, and `micr`.
+
+
+__(a)__  Using `read.table()` function, read `HW6_3.txt` file and save it as `stocks`. 
+In the third line, we use `as.Date` function to define `date` as calendar dates. 
+
+
+```{r error=T} 
+stocks <- read.table("C:\\Users\\jmmna\\Downloads\\HW6_3.txt")
+head(stocks)
+stocks$date <- as.Date(stocks$date)
+```
+
+
+__(b)__  Use `ifelse()` function to test if `micr` is above 60 but below 62. When true, return a value of 1. When false, return a value of 0. 
+Add the result to a data frame `stocks` as a variable `micr_buy`.  
+
+
+```{r error=T} 
+stocks$micr_buy <- ifelse(stocks$micr > 60 & stocks$micr < 62, 1, 0)
+print(stocks$micr_buy)
+```
+
+
+__(c)__  Use `ifelse()` function to test if `apple` is greater than 117. When true, return the value of `date`.  When false, return `NA`.
+Add the result to a data frame `stocks` as a variable `apple_date`.  
+
+
+```{r error=T}  
+stocks$apple_date <- ifelse(stocks$apple > 117, stocks$date, NA)
+print(stocks$apple_date)
+```
+
+
+__(d)__  We print out a data frame `stocks`.
+
+```{r error=T} 
+print(stocks)
+```
+
+We can see that `apple_date` has numeric values, not dates. 
+Because we did not define `apple_date` as a date object in part (c), it was automatically saved as a numeric variable. 
+
+When we wish to change a numeric variable to a date variable, we can change the class of the numeric variable to `"Date"`. Complete the following R code.
+
+
+```{r error=T}  
+class(stocks$apple_date) <- as.Date(stocks$apple_date, origin = "1970-01-01")
+class(stocks$apple_date)
+
+```
+
+
+## Question 8
+
+The `for` loop has the following format:
+
+```{r eval=F}  
+for(var in seq){
+  your code
+} 
+```
+
+When we use `for` loop, we may consider the following two approaches:
+
+1) In `seq`, we save all values which `var` can take from. For each element of `seq`, we execute the `for` loop.
+
+For example, a variable `primes` contains all values we will use to execute the `for` loop. 
+
+```{r eval=F} 
+primes <- c(2, 3, 5, 7, 11, 13)
+
+for (p in primes) {
+  your code 
+}
+```
+
+In this example, `p` takes the value of each element in `primes`. 
+
+2) In `seq`, we save all indexes of another variable which has all values we will take to run the `for` loop. 
+
+```{r eval=F} 
+primes <- c(2, 3, 5, 7, 11, 13)
+
+for (i in 1:length(primes)) {
+  your code 
+}
+```
+
+In this example, `i` takes a value from 1 to 6. 
+Inside your `for` loop, you can extract the `i`th element of `primes` by using `primes[i]`. 
+
+Thus, in the first example, `p` takes each element of `primes`. In the second example, `primes[i]` takes the `i`th element of `primes`. 
+
+Let's practice. Now we want to print out each element of `primes`, one by one, by using `for` loop. 
+(Do not print out all values of `primes` at once by using `print(primes)`)
+
+Complete two `print` functions below.
+
+
+```{r error=T} 
+primes <- c(2, 3, 5, 7, 11, 13)
+
+# example 1
+for (p in primes) {
+  print(p)
+}
+
+# example 2
+for (i in 1:length(primes)) {
+  print(primes[i])
+}
+```
+
+
+
+

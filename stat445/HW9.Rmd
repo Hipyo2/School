@@ -1,0 +1,463 @@
+---
+title: "Homework #9"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+The following R chunk is to reduce the size of plots. Please do not remove this chunk.
+```{r} 
+knitr::opts_chunk$set(warning = F, message = F, out.width = '50%') 
+```
+
+
+## Question 1
+
+
+__(a)__  To set a random seed, use your student ID.
+
+
+```{r error=T}
+set.seed(500517)
+```
+My NSHE ID is 5005171231. I cannot put the full number in as it is too large.
+
+__(b)__  Generate 100 random numbers from a standard normal distribution, find the mean and variance of the random numbers, and then draw a histogram. 
+
+Note that you should *NOT* generate *new* random numbers each time when calculating the mean and variance and drawing a histogram. You should use the same random numbers you generated.
+
+
+```{r error=T}
+x = rnorm(100)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(c)__  Generate 100 random numbers from a chi-squared distribution with 5 degrees of freedom, find the mean and variance of the random numbers, and then draw a histogram. 
+
+
+```{r error=T}
+x = rchisq(100,5)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(d)__  Generate 100 random numbers from a t-distribution with 5 degrees of freedom, find the mean and variance of the random numbers, and then draw a histogram. 
+
+
+```{r error=T}
+x = rt(100,5)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(e)__  Generate 100 random numbers from a F-distribution with 1 and infinity degrees of freedom, find the mean and variance of the random numbers, and then draw a histogram. 
+
+
+```{r error=T}
+x = rf(100,1,Inf)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(f)__  Generate 100 random numbers from an exponential distribution with mean 2, find the mean and variance of the random numbers, and then draw a histogram. 
+
+
+```{r error=T}
+x = rexp(100, rate = 1/2)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(g)__  Generate 100 random numbers from a uniform distribution on the interval (0,1), find the mean and variance of the random numbers, and then draw a histogram. 
+
+
+```{r error=T}
+x = runif(100,0,1)
+mean(x)
+var(x)
+hist(x)
+```
+
+
+__(h)__  A QQ (quantile-quantile) plot is a type of scatter plot used to compare the distribution of two groups or to compare a sample with a reference distribution.
+
+For example, you may draw a QQ plot to compare your data with a normal distribution.
+
+When plotting a single sample against a reference distribution, theoretical quantiles are used for one coordinate. R normally puts the theoretical quantiles on the X-axis and the data on the Y-axis. 
+
+When the distribution of X and Y match, the points in the QQ plot will lie near the line $y=x$. 
+On the other hand, if the two distributions are not the same, we will see systematic patterns in the QQ plot. 
+
+In R, we can use `qqnorm()` function to compare your data with a normal distribution.
+Also, to add a straight line, we can use `qqline()` function.
+
+Using the random numbers generated in part (g), draw a normal QQ plot and discuss whether your data follows a normal distribution or not. 
+
+
+```{r error=T}
+qqnorm(x)
+qqline(x)
+```
+The data does not follow a normal distribution. If the data was a normal distribution, the qqplot would depict a straight line and match with the qqline. My data does not conform perfectly to a straight line so shows that it does not follow a normal distribution.
+
+## Question 2
+
+
+The Brunswick Research Organization surveyed randomly selected individuals and asked them the primary way they received the daily news. Their choices were via newspaper (N), television (T), radio (R), or Internet (I). 
+
+
+```{r}
+news <- c("N", "N", "T", "T", "T", "I", "R", "R", "I", "T", 
+          "I", "N", "R", "R", "I", "N", "N", "I", "T", "N", 
+          "I", "R", "T", "T", "T", "T", "N", "R", "R", "I", 
+          "R", "R", "I", "N", "T", "R", "T", "I", "I", "T", 
+          "T", "I", "N", "T", "T", "I", "R", "N", "R", "T")
+```
+
+
+__(a)__  Complete the following frequency table.
+
+
+| Responses       | Frequency   | Relative Frequency |
+|:---------------:|:-----------:|:------------------:|
+| Newspaper (N)   |     10      | 0.20               |
+| Television (T)  |     16      | 0.32               |
+| Radio (R)       |     12      | 0.24               |
+| Internet (I)    |     12      | 0.24               |
+| Total           |     50      | 1.000              |
+
+
+```{r error=T}
+freq.table = table(news)
+rel.table = prop.table(freq.table)
+cbind("Freq" = freq.table, "Relative Frequency" = rel.table )
+```
+
+
+__(b)__  Create a bar graph of the `news` data as follows:
+
+* Use your favorite colors for each bar
+* Add the x-axis and y-axis labels
+* Add a title
+* Add a horizontal line to be dashed at 10
+* Add a legend
+
+
+```{r error=T}
+barplot(freq.table, col = c(3, 7, 10, 13), xlab = "Responses", ylab = "Frequency", main = "News Bar Graph",legend = T)
+abline(h=10, lty = "dashed")
+```
+
+
+__(c)__  Create a pie chart of the `news` data. 
+
+* Instead of N, T, R, and I, use Newspaper, Television, Radio, and Internet for the labels.
+To change the labels, you may use `labels` argument. (for example, `labels=c("female", "male")` inside `pie()` function)
+Keep in mind that the labels were sorted in alphabetical order. That is, I, N, R, T. You should change the labels in this order. 
+* Use the same colors as in part (b).
+* Add a title and make it 30% bigger.
+
+
+```{r error=T}
+pie(freq.table, labels = c("Internet","Newspaper", "Radio","Television"), main = "News Pie Graph", cex.main = 1.3,col = c(3, 7, 10, 13))
+```
+
+
+## Question 3
+
+
+In `VADeaths` data, the death rates are measured per 1000 population per year. 
+They are cross-classified by age group (rows) and population group (columns). 
+The age groups are: 50–54, 55–59, 60–64, 65–69, 70–74 and the population groups are Rural/Male, Rural/Female, Urban/Male and Urban/Female.
+
+```{r}
+VADeaths
+```
+
+
+__(a)__  Create a bar graph of the `VADeaths` data. 
+
+* Use different colors for each age group
+* Add a legend
+* Use grouped bars (not stacked bars)
+
+
+```{r error=T}
+barplot(VADeaths, legend = T,beside = T, col = c("red", "green", "blue", "purple","orange"))
+```
+
+
+__(b)__  In part (a), your legend appears at the top right of the plot and might hide some parts of the plot. Change the range for the y-axis so that a legend fits well in the plot.
+
+
+```{r error=T}
+barplot(VADeaths, legend = T,beside = T, col = c("red", "green", "blue", "purple","orange"), ylim = c(0,120))
+```
+
+
+__(c)__  Choose only 60-64 age group and create a bar graph again. 
+
+* Change the colors of the bars for each population group
+* Make the bars horizontal
+* In this case, you might not be able to see some of y-axis labels. Make the y-axis labels horizontal. 
+* Still you might be not able to see some of y-axis labels. Add more space on the left of the plot. In this case, `windows()` function does not work because we are using R Markdown. 
+Please use `mar` argument in the `par()` function.
+* Add a legend. By changing the range for x-axis, make sure that the legend does not hide any bars.
+
+
+```{r error=T}
+par(mar = c(5.1,10.1,4.1,1.1))
+barplot(VADeaths["60-64",], legend = T, col = rainbow(4), horiz = T, las = 1, xlim = c(0,60))
+```
+
+
+## Question 4
+
+
+Fifty off-campus students were asked how long it takes them to get to school. The times (in minutes) are stored in `school`.
+
+```{r}
+school <- c(23, 22, 29, 19, 12, 18, 17, 30, 11, 27,
+            11, 18, 26, 25, 20, 25, 15, 24, 21, 31, 
+            29, 14, 22, 25, 29, 24, 12, 30, 27, 21,
+            27, 25, 21, 14, 28, 17, 17, 24, 20, 26,
+            13, 20, 27, 26, 17, 18, 25, 21, 33, 29)
+```
+
+
+__(a)__  Create a stem-and-leaf plot. Do you think it is a skewed distribution? Explain why. 
+
+
+```{r error=T}
+stem(school)
+```
+I think it is a skewed distribution as it peaks at 24 and most of the distribution is above 20. There are few points below 20. Given the shape of the stem-and-leaf plot, the plot is slightly skewed to the right.
+
+__(b)__  Construct a histogram. 
+
+* Choose bins as [9, 13], [14, 18], [19, 23], [24, 28], [29, 33].
+* Change a title and x-axis label to be more informative. 
+
+
+```{r error=T}
+hist(school, breaks = c(9,13,18,23,28,33), main = "School Data", xlab = "Time to get to school", xlim = c(5,35), freq = T)
+```
+
+From the data, it looks like the first class [9,13] has 5 students and the second class [14,18] has 10 students. 
+Did you have the same numbers on your histogram?
+If not, you may consider adding `right=F` argument or change your class intervals.
+
+
+__(c)__  Complete the following frequency table.
+
+
+| Class Interval | Frequency  | Relative Frequency |
+|:--------------:|:----------:|:------------------:|
+| 9-13           |    5       | 0.10               |
+| 14-18          |    10      | 0.20               |
+| 19-23          |    11      | 0.22               |
+| 24-28          |    16      | 0.32               |
+| 29-33          |    8       | 0.16               |
+| Total          |    50      | 1.000              |
+
+
+In this problem, you need to change your variable into a categorical variable. 
+To do so, you may use `cut()` function studied in Chapter 4 on pages 26-27, and then apply `table()` function.
+
+Again, make sure that the first class [9,13] has 5 students and the second class [14,18] has 10 students.
+
+
+```{r error=T}
+
+freq.table = table(cut(school, breaks = c(9,13,18,23,28,33)))
+rel.table = prop.table(freq.table)
+freq.table = cbind("Freq" = freq.table, "Relative Frequency" = rel.table)
+rownames(freq.table) = c("9-13","14-18","19-23", "24-28", "29-33")
+freq.table
+```
+
+
+__(d)__  Draw a histogram and add a density line on it. For this question, you may use the default class intervals.
+
+
+```{r error=T}
+hist(school, freq=F)
+lines(density(school))
+```
+
+
+## Question 5
+
+
+In this question, let's use `iris` data.
+
+```{r}
+head(iris)
+```
+
+
+__(a)__  Draw a boxplot of sepal length. Is there any outlier? Explain why.
+
+
+```{r error=T}
+boxplot(iris$Sepal.Length)
+```
+<br/>There is no indicated outlier as there are no circle marks on the plot. This is because all the points are within the first and third quartile and within 1.5 IQR of the first and third quartile.
+
+__(b)__  Draw a boxplot of sepal length for each species. 
+
+* Do not create three individual plots. All three boxes must be on one plot.
+* Change x-axis and y-axis labels and make their font size 50% bigger.
+* Make the names of iris species 30% bigger.
+
+
+```{r error=T}
+boxplot(iris$Sepal.Length ~ iris$Species,xlab = "Iris Species", ylab = "Iris Sepal Length", cex.lab = 1.5, cex.axis = 1.3)
+```
+
+
+__(c)__  Draw a scatter plot with sepal length on the vertical axis and sepal width on the horizontal axis. 
+
+* You may use `data` argument inside `plot()` function to specify the data set name. By doing so, you don't need to write `iris$` in front of a variable name.
+
+
+```{r error=T}
+plot(data = iris, Sepal.Length~Sepal.Width)
+```
+
+
+__(d)__  On the scatter plot you drew in part (c), add the followings:
+
+* Copy and paste your code from part (c).
+* Using `points()` function, change data points of `setosa` to be in red square.
+* Using `points()` function, change data points of `versicolor` to be in green circle.
+* Using `points()` function, change data points of `virginica` to be in blue triangle.
+* Hint: To choose `setosa` data, you may use `subset` argument inside `points()` function. That is, add `subset=(Species=="setosa")`. 
+
+
+```{r error=T}
+plot(data = iris, Sepal.Length~Sepal.Width)
+points(Sepal.Length~ Sepal.Width, subset=(Species=="setosa"), data = iris, col = "red", pch = 22)
+points(iris$Sepal.Width[iris$Species == "versicolor"], iris$Sepal.Length[iris$Species == "versicolor"], col = "green", pch = 19)
+points(iris$Sepal.Width[iris$Species == "virginica"], iris$Sepal.Length[iris$Species == "virginica"], col = "blue", pch = 24)
+```
+
+
+__(e)__  We will repeat part (d) using a different approach. 
+
+* Draw an empty graph with x-axis ranged from 1.8 to 4.5 and y-axis ranged from 4.2 to 8.
+* Add the labels for x-axis and y-axis.
+* Copy and paste three `points()` functions from part (d).
+
+After that, add a legend using `legend()` function as the following:
+
+* We set the (x,y) coordinates as (4, 8)
+* To list all of iris species, we use `legend` argument inside `legend()` function. Enter the names of all species in alphabetical order. Of course, it is a character vector.
+* Set the colors of data points for each species. You should use the same colors used in part (d).
+* Inside the `legend()` function, use the same plotting characters. That is, a red square, green circle, and blue triangle for each of species. To define three types at the same time, use a numeric vector. 
+
+
+```{r error=T}
+plot(c(1.8,4.5),c(4.2,8), type = "n", xlab = "Sepal.Width", ylab = "Sepal.Length")
+points(iris$Sepal.Width[iris$Species == "setosa"], iris$Sepal.Length[iris$Species == "setosa"], col = "red", pch = 22)
+points(iris$Sepal.Width[iris$Species == "versicolor"], iris$Sepal.Length[iris$Species == "versicolor"], col = "green", pch = 19)
+points(iris$Sepal.Width[iris$Species == "virginica"], iris$Sepal.Length[iris$Species == "virginica"], col = "blue", pch = 24)
+
+legend(x=4, y=8, legend=c("setosa","versicolor","virginica"), col= c("red","green","blue"), pch = c(22,19,24))
+```
+
+
+## Question 5
+
+
+A data set `EuStockMarkets` contains the daily closing prices of major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. 
+
+```{r}
+head(EuStockMarkets)
+```
+
+
+__(a)__  Draw a scatter plot of `EuStockMarkets`. You don't need to add any other arguments in the function. Only enter the data set name.
+
+
+```{r error=T}
+plot(EuStockMarkets)
+```
+
+
+It creates a very nice plot. It is because the object of this data set was saved as `"mts"`. That is, a multivariate time series. Thus, R chooses a better plot structure for the multivariate time series data automatically.
+
+
+__(b)__   Now I will change its data type as a data frame for a study purpose. In addition, I will extract time points from the data and save it as `time`. 
+Please do not modify the next chunk. Do not use `EuStockMarkets` anymore.
+
+```{r}
+stock <- as.data.frame(EuStockMarkets)
+stock$time <- time(EuStockMarkets)  
+head(stock)
+```
+
+
+Draw a plot of DAX versus time. Again, you may use `data=stock` argument. 
+
+* Connect data points with lines
+* Add a line of best-fit (that is, a regression line)
+* Make the line thicker in blue
+
+
+```{r error=T}
+plot(DAX ~ time, data = stock, lty = 1, type = "l")
+fit = lm(DAX~time, data = stock)
+abline(fit, col = "blue", lwd = 3)
+```
+
+
+__(c)__  We will draw a plot of stock prices for four stock indices on one plot. 
+
+* Draw an empty graph with x-axis ranged from 1991 to 1999 and y-axis ranged from 1400 to 8450.
+* Add the labels for x-axis and y-axis appropriately.
+* Draw a plot of DAX versus time on the empty graph. Connect points with solid lines
+* Draw a plot of SMI versus time on the previous graph. Connect points with dashed lines
+* Draw a plot of CAC versus time on the previous graph. Connect points with blue dotted lines. Make it thicker.
+* Draw a plot of FTSE versus time on the previous graph. Connect points with red solid lines
+
+After that, add a legend on the top left using `legend()` function
+Accordingly, complete other arguments `legend`, `col`, `lty`, and `lwd` below. 
+
+
+```{r error=T}
+plot(c(1991,1999),c(1400,8450), type = "n", xlab = "Time", ylab = "Daily closing prices")
+points(DAX~time, data = stock, lty = 1,type = "l")
+points(SMI~time, data = stock, lty = 2,type = "l")
+points(CAC~time, data = stock, lty = 3, col = "blue",type = "l", lwd = 2)
+points(FTSE~time, data = stock, lty = 1, col = "red",type = "l")
+legend("topleft", legend=c("DAX","SMI", "CAC", "FTSE"), col=c("black", "black", "blue", "red"), lty=c(1,2,3,1), lwd=c(1,1,2,1))
+```
+
+
+__(d)__  Save the plot from part (c) as `stock.jpg` using `jpeg()` function.
+Submit this jpg file. 
+
+
+```{r error=T}
+jpeg(filename = "stock.jpg")
+plot(c(1991,1999),c(1400,8450), type = "n", xlab = "Time", ylab = "Daily closing prices")
+points(DAX~time, data = stock, lty = 1,type = "l")
+points(SMI~time, data = stock, lty = 2,type = "l")
+points(CAC~time, data = stock, lty = 3, col = "blue",type = "l", lwd = 2)
+points(FTSE~time, data = stock, lty = 1, col = "red",type = "l")
+legend("topleft", legend=c("DAX","SMI", "CAC", "FTSE"), col=c("black", "black", "blue", "red"), lty=c(1,2,3,1), lwd=c(1,1,2,1))
+dev.off()
+```
+

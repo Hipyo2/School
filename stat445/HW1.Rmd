@@ -1,0 +1,35 @@
+---
+title: "Homework #1"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+## Question 1 
+
+Write your R code to install an R package `MASS`.
+
+```{r error=T} 
+install.packages("MASS", repos = "https://cran.r-project.org")
+
+```
+
+
+## Question 2 
+
+Write your R code to load an R package `MASS`.
+
+```{r error=T} 
+library(MASS)
+
+```
+
+
+## Question 3 
+
+Add some options into the chunk below to hide your code but show your output.
+
+```{r error=T, echo= FALSE}
+print("Hello World")
+```
+

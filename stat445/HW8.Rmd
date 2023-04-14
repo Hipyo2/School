@@ -1,0 +1,1184 @@
+---
+title: "Homework #8"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+In this HW, you will use R libraries `MASS` and `faraway`. Thus, it would be better to install them before knitting this file. 
+
+
+## Question 1
+
+
+A variable `temp` contains temperature measurements for 7 days. `temp` is a list of length 7, where each element is a vector of length 5, representing 5 measurements on a given day.
+
+```{r} 
+temp <- list(c(3, 7, 9, 6, -1), c(6, 9, 12, 13, 5), c(4, 8, 3, -1, -3), 
+             c(1, 4, 7, 2, -2), c(5, 7, 9, 4, 2), c(-3, 5, 8, 9, 4), 
+             c(3, 6, 9, 4, 1))
+```
+
+
+__(a)__  Use `lapply()` to calculate the minimum of the temperature measurements for every day.
+
+
+```{r error=T} 
+lapply(temp,min)
+```
+
+
+__(b)__  Use `sapply()` to calculate the minimum of the temperature measurements for every day.
+
+
+```{r error=T} 
+sapply(temp,min)
+```
+
+
+__(c)__  Use `lapply()` to compute the the maximum temperature for each day.
+
+
+```{r error=T} 
+lapply(temp,max)
+```
+
+
+__(d)__  Use `sapply()` to compute the the maximum temperature for each day.
+
+
+```{r error=T} 
+sapply(temp,max)
+```
+
+
+__(e)__  Define a function `my_avg()` which takes a vector of temperatures and calculates the average of the minimum and maximum temperatures of the vector. Complete the following R codes.
+
+
+```{r error=T} 
+my_avg <- function(x) {
+  ( min(x) + max(x) ) / 2
+}
+```
+
+
+__(f)__  Next, use `my_avg()` function inside `sapply()` to apply it over the vectors inside `temp`.
+
+
+```{r error=T} 
+sapply(temp,my_avg)
+```
+
+
+__(g)__  Use `my_avg()` function over `temp` with `lapply()`.
+
+
+```{r error=T} 
+lapply(temp,my_avg)
+```
+
+
+__(h)__  Define a function `extremes()` which takes a vector of numerical values and returns a vector containing the minimum and maximum values of a given vector, with the names "min" and "max", respectively.
+
+
+```{r error=T} 
+extremes <- function(x){
+  c(min = min(x), max = max(x))
+}
+```
+
+
+__(i)__  Apply `extremes()` function over the vector `temp` using `sapply()`.
+
+
+```{r error=T} 
+sapply(temp,extremes)
+```
+
+
+__(j)__  Apply `extremes()` function over the vector `temp` using `lapply()`.
+
+
+```{r error=T} 
+lapply(temp,extremes)
+```
+
+
+__(k)__  Now, we have a function `below_zero()` that takes a vector of numerical values and returns a vector that only contains the values that are strictly below zero. (You don't need to modify this function)
+
+```{r error=T} 
+below_zero <- function(x){
+  return(x[x<0])
+}
+```
+
+Apply `below_zero()` over `temp` using `sapply()` and store the result in `freezing_s`.
+
+
+```{r error=T} 
+freezing_s = sapply(temp,below_zero)
+```
+
+
+__(l)__  Apply `below_zero()` over `temp` using `lapply()`. Save the resulting list in a variable `freezing_l`.
+
+
+```{r error=T} 
+freezing_l = lapply(temp,below_zero)
+```
+
+
+__(m)__  Compare `freezing_s` to `freezing_l` using the `identical()` function.
+
+
+```{r error=T} 
+identical(freezing_s,freezing_l)
+```
+
+
+__(n)__  We have a function `print_info()` that takes a vector and prints the average of this vector.
+
+```{r error=T} 
+print_info <- function(x){
+  cat("The average temperature is", mean(x), "\n")
+}
+```
+
+Apply `print_info()` over the contents of `temp` with `sapply()`.
+
+
+```{r error=T} 
+sapply(temp, print_info)
+```
+
+
+__(o)__  Apply `print_info()` over the contents of `temp` with `lapply()`.
+
+
+```{r error=T} 
+lapply(temp, print_info)
+```
+
+
+__(p)__  We have a function `basics()` that takes a vector, and returns a named vector of length 3, containing the minimum, mean and maximum value of the vector respectively.
+
+```{r error=T} 
+basics <- function(x){
+  c(min=min(x), mean=mean(x), max=max())
+}
+```
+
+Apply `basics()` function over `temp` using `vapply()`. 
+This time, you can use `numeric(3)` to specify the `FUN.VALUE` argument.
+
+
+```{r error=T} 
+vapply(temp, basics, numeric(3))
+```
+
+
+__(q)__  We decided to add `median()` into `basics()` function. 
+
+```{r error=T} 
+basics <- function(x){
+  c(min=min(x), mean=mean(x), max=max(x), median=median(x))
+}
+```
+
+After running the following R code, we get an error message. Try to fix the error. 
+
+
+```{r error=T} 
+vapply(temp, basics, numeric(4))
+```
+Added x to max() and median() and changed numeric(3) to numeric(4) with length 4
+
+__(r)__  Convert the following `sapply()` function to `vapply()`. Their results should be exactly the same.
+
+
+```{r error=T} 
+sapply(temp, max)
+
+vapply(temp, max, numeric(1))
+```
+
+
+__(s)__  Convert the following `sapply()` function to `vapply()`. Their results should be exactly the same.
+
+
+```{r error=T} 
+sapply(temp, function(x, y) { mean(x) > y }, y=5)
+
+
+vapply(temp, function(x, y) { mean(x) > y }, y=5, logical(1))
+```
+
+
+## Question 2
+
+
+A pre-loaded data set `InsectSprays` contains the number of insects found on various agricultural units, and the type of insect spray that was used on each unit.
+
+```{r error=T} 
+head(InsectSprays)
+```
+
+
+__(a)__  Use `tapply()` to report the total insect counts by each spray type. 
+
+
+```{r error=T} 
+tapply(InsectSprays$count, InsectSprays$spray, sum)
+```
+
+
+__(b)__  Compute the percentage of agricultural units in each spray type group that had at least five bugs on them. When printing it out, round the percentages to the nearest whole number. 
+
+To do so, you may consider the following steps:
+
+1. Find all spray types and save it as a character vector. Do the following steps for each spray type using `for` loop.
+
+2. Find the numbers of insects. It is a numeric vector. 
+
+3. For each element of that vector, check whether or not it is greater than or equal to 5. 
+Then, your output will be a logical value.  
+After checking all elements, your output will be a logical vector.
+
+4. If you calculate the sum of all elements of the logical vector, you will have the total number of agricultural units which had at least 5 bugs.
+
+5. Okay, then, if you calculate the *mean* of all elements of the logical vector, you will have the proportion of agricultural units which had at least 5 bugs. It will be between 0 and 1.
+
+6. To obtain the percentage of agricultural units, you would need to multiply the proportion by 100. 
+    
+7. Round the percentage to the nearest whole number.
+    
+    
+```{r error=T} 
+for(i in unique(InsectSprays$spray)){
+  nv = InsectSprays$count[InsectSprays$spray == i]
+  lv = (nv >= 5)
+  slv = sum(lv)
+  percentage <- round(mean(lv) * 100)
+  cat("For Spray ", i, "," , percentage, "% of units have at least 5 bugs \n") 
+}
+```
+
+
+__(c)__  Obtain the same numeric results as in part (b), with rounding, but use `tapply()`.
+
+
+```{r error=T} 
+tapply(InsectSprays$count >= 5, InsectSprays$spray, function(x) {round(mean(x) * 100)})
+```
+
+
+## Question 3  
+
+
+In the library `MASS`, there is a data frame named `mammals`.
+
+```{r} 
+library(MASS)  # call package
+head(mammals)
+```
+
+This data set has average brain and body weights for 62 species of land mammals.
+
+
+__(a)__  Find the number of observations ($n$).
+
+```{r error=T} 
+str(mammals)
+```
+
+
+__(b)__  Using `apply()` function, find the mean for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, MARGIN = 2, mean)
+```
+
+
+__(c)__  Using `apply()` function, find the median for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, 2, median)
+```
+
+
+__(d)__  Using `apply()` function, find the minimum and maximum for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, 2, function(x){ c(Min = min(x), Max = max(x))})
+```
+
+
+__(e)__  Using `apply()` function, find the variance for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, 2, var)
+```
+
+
+__(f)__  Using `apply()` function, find the standard deviation for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, 2,sd)
+```
+
+
+__(g)__  Using `apply()` function, find the five number summaries for brain and body weights, respectively. 
+
+
+```{r error=T} 
+apply(mammals, 2,fivenum)
+```
+
+
+__(h)__  To measure the center of the data, we usually compute a mean. To measure the spread of the data, we usually compute a variance. 
+However, these two measures are highly influenced by outliers. 
+
+To avoid the influence of outliers, we may use a median as a measure of center.
+In the same way, we may use a median absolute deviation (MAD) as a measure of spread to avoid the influence of outliers. 
+
+For a data set $X_i$ ($i=1,2,\ldots,n$), we first calculate the deviation from the median. 
+That is, $X_i-\widetilde X$, where $\widetilde{X}$ is the median.
+
+Then, we calculate their absolute value $|X_i-\widetilde X|$. 
+
+Finally we calculate their median. Thus, we have the MAD defined as
+\[
+MAD = median(|X_i-\widetilde X|)
+\]
+
+Create a function to compute an MAD, and then use `apply()` function to find the MAD for brain and body weights, respectively. 
+
+(Hint: in HW 7, when we calculate $\frac{1}{n-1}\sum_{i=1}^n (X_i-\overline{X})^2$, we didn't need to use a `for` loop. We could simply use `1/(length(x)-1)*sum((x-mean(x))^2)`.
+For MAD, you don't need to use a loop either.)
+
+
+```{r error=T}  
+MAD = function (x) {
+  median(abs(x - median(x)))
+}
+apply(mammals, 2, MAD)
+```
+
+
+__(i)__  Actually, there is a built-in function `mad` in R. However, it uses a different version of MAD. Thus, to find our MAD, we should set an argument `constant` as 1.
+
+`mad(x, center = median(x), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE)`
+
+Using the built-in function `mad()` and `apply()`, find the MAD for brain and body weights, respectively. 
+
+
+```{r error=T}  
+apply(mammals, 2, function(x){mad(x, constant = 1)})
+```
+
+
+## Question 4
+
+
+From the library `MASS`, we have a data set `cats` which contains heart and body weights of samples of male and female cats.
+
+```{r} 
+library(MASS)
+head(cats)
+```
+
+
+__(a)__  Find the number of observations ($n$) and the number of variables ($p$). 
+
+
+```{r error=T} 
+str(cats)
+```
+
+
+__(b)__  Using `aggregate()` function, find the mean heart weight for each sex. 
+
+```{r error=T} 
+aggregate(Hwt~Sex,cats,mean)
+```
+
+
+__(c)__  Using `tapply()` function, find the mean heart weight for each sex. 
+
+
+```{r error=T} 
+tapply(cats$Hwt, cats$Sex, mean)
+```
+
+
+__(d)__  Using `by()` function, find the mean heart weight for each sex. 
+
+
+```{r error=T}  
+by(cats$Hwt, cats$Sex, mean)
+```
+
+
+__(e)__  Using only one `aggregate()` function, find the mean body weight and heart weight for each sex. 
+
+(Hint: Chapter 11 p. 34)
+
+
+```{r error=T} 
+aggregate(cbind(Hwt, Bwt) ~ Sex, cats, mean)
+```
+
+
+__(f)__  To find the mean body weight and heart weight for each sex, can you use *one* `tapply` function? If not, explain why. 
+
+
+Answer) 
+You cannot use only one tapply function because the first variable determines the rows and cats\$Sex cannot be the first variable because a mean of characters results in NA values. If you put a list of cats\$Hwt and cats\$Bwt, it would cause errors due to improper arguments.
+
+__(g)__  To find the mean body weight and heart weight for each sex, we may use `by()` function. 
+
+```{r error=T} 
+by(cats[,2:3], cats$Sex, mean)
+```
+
+However, we got an error. 
+In `by()` function, the first argument could be a matrix or data frame. Thus, `cats[,2:3]` is okay to use.
+However, we cannot use `mean()` function for a matrix or data frame. 
+
+Modify the `by()` function below to find the mean body weight and heart weight for each sex. 
+
+
+```{r error=T} 
+by(cats, cats$Sex, function(x){c(mean(x[,2]), mean(x[,3]))})
+```
+
+
+__(h)__  Divide the whole data set for each sex, and then save each of them as a component of the list `cats_by_sex`. 
+
+
+```{r error=T} 
+cats_by_sex <- list("MALE" = cats[cats$Sex == 'M',2:3],"FEMALE" = cats[cats$Sex == "F",2:3])
+print(cats_by_sex)
+```
+
+
+__(i)__  Divide a variable `Hwt` for each sex, and then save each of them as a component of the list `Hwts_by_sex`. 
+
+
+```{r error=T} 
+Hwts_by_sex <- list("MALE" = cats[cats$Sex == 'M',3],"FEMALE" = cats[cats$Sex == "F",3])
+print(Hwts_by_sex)
+```
+
+
+__(j)__  Using only `mean()` function, find the mean heart weight of cats whose body weight is greater than 3.  
+
+
+```{r error=T} 
+mean(cats$Hwt[cats$Bwt > 3])
+```
+
+
+__(k)__  Using `aggregate()` function, find the mean heart weight of cats whose body weight is greater than 3.  
+
+* Hint: for each cat, check whether or not their body weight is greater than 3. Then, you will have a logical vector for all cats. Use this logical vector as a grouping variable. For example, copy and paste your code in part (b) and replace `Sex` with your logical vector.
+
+
+```{r error=T} 
+lv = cats$Bwt > 3
+aggregate(Hwt ~ lv,cats, mean)
+```
+
+
+__(l)__  Using only `mean()` function, find the mean heart weight of *female* cats whose body weight is greater than 2.5.  
+
+
+```{r error=T} 
+mean(Hwts_by_sex$FEMALE[cats_by_sex$FEMALE$Bwt > 2.5])
+```
+
+
+__(m)__  Using `aggregate()` function, find the mean heart weight of *female* cats whose body weight is greater than 2.5.  
+This is similar to part (k), but you would need to check both `Sex` and `Bwt`.
+
+
+```{r error=T} 
+lv = cats_by_sex$FEMALE$Bwt > 2.5
+aggregate(Hwt ~ lv,cats_by_sex$FEMALE, mean)
+```
+
+
+## Question 5  
+
+
+In the library `faraway`, there is a data set `diabetes` containing 19 variables.
+To see the description of variables, type `?diabetes` on the Console.
+
+```{r}
+library(faraway)
+head(diabetes)
+```
+
+
+__(a)__  Using `aggregate()` function, find the mean of Total Cholesterol for each location. 
+
+
+```{r error=T} 
+aggregate(chol~location, diabetes, mean)
+```
+
+
+__(b)__  Using `tapply()` function, find the mean of Total Cholesterol for each location. 
+
+
+```{r error=T} 
+tapply(diabetes$chol, diabetes$location, mean)
+```
+
+
+__(c)__  In part (b), one of the outcomes was NA. Right? It might be because of missing values.
+Calculate the number of missing values in `chol`. 
+
+
+```{r error=T} 
+sum(is.na(diabetes$chol))
+```
+
+
+__(d)__  Modify your code in part (b) to exclude the missing value(s) from calculation.
+
+
+```{r error=T} 
+tapply(diabetes$chol, diabetes$location, mean, na.rm=T)
+```
+
+
+__(e)__  In R, to calculate a $100(1-p)$th percentile of `x`, we may use `quantile()` function with additional argument. That is, `quantile(x, probs=p)`. 
+
+For example, to find the 64th percentile, we use `quantile(x, probs=0.64)`. The 64th percentile means that 64% of data have lower values.
+
+Okay, now, find the 20th percentile of Total Cholesterol for each location. (you may use any R function)
+
+
+```{r error=T} 
+tapply(diabetes$chol, diabetes$location, function(x) {quantile(x, probs = 0.2, na.rm = T)})
+```
+
+
+__(f)__  Find the standard deviation of Total Cholesterol for each location and gender. (you may use any R function)
+
+
+```{r error=T} 
+tapply(diabetes$chol, list(diabetes$location, diabetes$gender), function(x) {sd(x, na.rm = T)})
+```
+
+
+## In the following questions, you should use R.
+
+
+## Question 6
+
+Assume that you buy a lottery ticket in 50 lotteries, in each of which your chance of winning a prize is 0.01.
+
+
+__(a)__  What is the probability that you will win a prize exactly once?
+
+
+```{r error=T}
+dbinom(1,50,0.01)
+```
+
+
+__(b)__  What is the probability that you will win a prize at least ten times?
+
+
+```{r error=T}
+1 - pbinom(9,50,0.01)
+```
+P(X >= 10) = 1 - P(X <= 9)
+
+## Question 7
+
+
+On average, a textbook author makes two wordprocessing errors per page on the first draft of her textbook. In this question, we can assume that the number of errors follows a Poisson distribution.
+
+
+__(a)__  What is the probability that on the next page she will make two or more errors?
+
+
+```{r error=T}
+1 - ppois(1,2)
+```
+
+
+__(b)__  What is the probability that on the next page she will make no errors?
+
+
+```{r error=T}
+dpois(0,2)
+```
+
+
+__(c)__  From the Poisson distribution, generate 10 random numbers.
+
+
+```{r error=T}
+set.seed(2022)
+rpois(10,2)
+```
+
+
+## Question 8
+
+
+Find the following probabilities.
+
+
+__(a)__  $P(0\leq Z \leq 2.33)$
+
+
+```{r error=T}
+pnorm(2.33)-pnorm(0)
+```
+
+
+__(b)__  $P(-1.52 \leq Z \leq 0)$
+
+
+```{r error=T}
+pnorm(0)-pnorm(-1.52)
+```
+
+
+__(c)__  $P(-1.25 \leq Z \leq 0.75)$
+
+
+```{r error=T}
+pnorm(-1.25)-pnorm(0.75)
+```
+
+
+__(d)__  $P(Z > 1.82)$
+
+
+```{r error=T}
+pnorm(1.82, lower.tail = F)
+```
+
+
+__(e)__  $P(Z \leq 1.46)$
+
+
+```{r error=T}
+pnorm(1.46)
+```
+
+
+__(f)__  $P(Z> -2.05)$
+
+
+```{r error=T}
+pnorm(-2.05, lower.tail = F)
+```
+
+
+__(g)__  $P(Z< -0.33)$
+
+
+```{r error=T}
+pnorm(-.33)
+```
+
+
+__(h)__  $P(1.2<Z<1.8)$
+
+
+```{r error=T}
+pnorm(1.8)-pnorm(1.2)
+```
+
+
+__(i)__  $P(|Z|<1.28)$
+
+
+```{r error=T}
+pnorm(1.28) - pnorm(-1.28)
+```
+
+
+## Question 9
+
+
+Find the following probabilities when $X \sim N(2, 4)$.
+
+
+__(a)__  $P(X \geq 1)$
+
+
+```{r error=T}
+pnorm(1,2,2,lower.tail = F)
+```
+
+
+__(b)__  $P(1 \leq  X < 6)$
+
+
+```{r error=T}
+pnorm(6,2,2)-pnorm(1,2,2)
+```
+
+
+__(c)__  $P(-1.5 \leq X < -1)$
+
+
+```{r error=T}
+pnorm(-1,2,2)-pnorm(-1.5,2,2)
+```
+
+
+__(d)__  $P(-2 \leq X - 2 < 2)$
+
+
+```{r error=T}
+pnorm(2+2,2,2)-pnorm(-2+2,2,2)
+```
+
+
+## Question 10
+
+
+The lifetime of a battery in a certain application is normally distributed with mean $\mu = 10$ hours and standard deviation $\sigma = 2$ hours.
+
+
+__(a)__  What is the probability that a battery will last more than 17 hours?
+
+
+```{r error=T}
+pnorm(17,10,2,lower.tail = F)
+```
+
+
+__(b)__  What is the probability that a battery will last less than 11 hours?
+
+
+```{r error=T}
+pnorm(11,10,2)
+```
+
+
+__(c)__  What is the probability that the lifetime of a battery is between 12.5 and 17 hours?
+
+
+```{r error=T}
+pnorm(17,10,2)-pnorm(12.5,10,2)
+```
+
+
+## Question 11
+
+
+Find the following z-scores.
+
+
+__(a)__  $z_{0.01}$
+
+
+```{r error=T}
+qnorm(0.01, lower.tail = F)
+```
+
+
+__(b)__  $z_{0.05}$ 
+
+
+```{r error=T}
+qnorm(0.05, lower.tail = F)
+```
+
+
+__(c)__  $z_{0.10}$
+
+
+```{r error=T}
+qnorm(0.10,lower.tail = F)
+```
+
+
+## Question 12
+
+
+In the previous question, it was not convenient to type an argument `lower.tail=F`. 
+
+
+__(a)__  To avoid this problem, let's define our own function to calculate $z_\alpha$ without typing `lower.tail=F`. 
+Name the function as `z.alpha` and the only argument we enter is $\alpha$. 
+(you may use a built-in R function such as `qnorm`, `pnorm`, `dnorm`.)
+
+
+```{r error=T}
+z.alpha <- function(alpha){
+  qnorm(alpha)*-1
+}
+```
+
+
+__(b)__  Using `z.alpha()` function, find $z_{0.05}$.
+
+
+```{r error=T}
+z.alpha(0.05)
+
+```
+
+
+## Question 13 
+
+
+Find the following values.
+
+
+__(a)__  $\chi_{7,0.025}^2$.
+
+
+```{r error=T}
+qchisq(0.025,7,lower.tail = F)
+```
+
+
+__(b)__  $\chi_{7,0.975}^2$.
+
+
+```{r error=T}
+qchisq(0.975,7,lower.tail = F)
+```
+
+
+__(c)__  $\chi_{9,0.05}^2$.
+
+
+```{r error=T}
+qchisq(0.05,9,lower.tail = F)
+```
+
+
+__(d)__  $\chi_{9,0.95}^2$.
+
+
+```{r error=T}
+qchisq(0.05,9)
+```
+
+
+__(e)__  $t_{7,0.025}$.
+
+
+```{r error=T}
+qt(0.025,7,lower.tail = F)
+```
+
+
+__(f)__  $t_{7,0.05}$.
+
+
+```{r error=T}
+qt(0.05,7,lower.tail = F)
+```
+
+
+__(g)__  $F_{7,12, 0.025}$.
+
+
+```{r error=T}
+qf(0.025,7,12,lower.tail=F)
+```
+
+
+__(h)__  $F_{7,12, 0.05}$.
+
+
+```{r error=T}
+qf(0.05,7,12,lower.tail=F)
+```
+
+
+__(i)__  $F_{7,12, 0.975}$.
+
+
+```{r error=T}
+qf(0.025,7,12)
+```
+
+
+__(j)__  $F_{7,12, 0.95}$.
+
+
+```{r error=T}
+qf(0.05,7,12)
+```
+
+
+__(k)__  $\frac{1}{F_{12,7, 0.025}}$. 
+Is it the same as part (i)? 
+
+
+```{r error=T}
+1/qf(0.025,12,7,lower.tail = F)
+```
+
+
+## Question 14
+
+
+Using `mapply()` function, redo Question 13 parts (a)-(d).
+That is, calculate $\chi_{7,0.025}^2$, $\chi_{7,0.975}^2$, $\chi_{9,0.05}^2$, $\chi_{9,0.95}^2$.
+
+
+```{r error=T}
+mapply(function(x,y){qchisq(x,y,lower.tail=F)},c(0.025,0.975,0.05,0.95), c(7,7,9,9))
+```
+
+
+## Question 15
+
+
+__(a)__  Using `rbinom()` function, let's do some experiments to toss a coin. The probability of getting a head is 30%.
+Toss a coin 10 times, and print out the outcomes. At each toss, the outcome is 1 if the coin comes up heads; 0 otherwise. 
+Thus, you should have a $10 \times 1$ numeric vector.
+
+
+```{r error=T}
+set.seed(2022)
+rbinom(10,1,0.3)
+```
+
+
+__(b)__  Using `dbinom()` function, calculate the probability of getting heads exactly twice.
+
+
+```{r error=T}
+dbinom(2,10,0.3)
+```
+
+
+__(c)__  The probability calculated in part (b) is a theoretical probability based on the binomial distribution. 
+
+Now we will conduct some simulation to calculate an empirical probability based on experiments.
+It is more complicated. So, let me explain it step by step.
+
+
+(1) Using `rbinom()` function, we toss 10 coins 10,000 times. The probability of getting a head is 30%.
+Each time we toss 10 coins, we count how many heads we have. It must be between 0 and 10. 
+After tossing 10 coins 10,000 times, we save the outcomes into a variable `x`. 
+Thus, `x` will be a numeric vector of length 10000. 
+(Remember that you don't need to toss 10 coins 10,000 times separately. You only need to use one `rbinom()` function. 
+Please don't print out those 10,000 values.)
+
+(2) Now let's find when we had 2 heads out of 10 coins. Since we repeated 10,000 times, we must have had 2 heads so many times (among 10,000 repetitions).
+Again, never print out those values!
+Check whether we had 2 heads or not for each repetition, and then save the output as `two`. 
+The variable `two` must be a logical vector. `TRUE` means that we had 2 heads. 
+The index location of `TRUE` value shows the experiments we had 2 heads.
+
+(3) Calculate the mean of `two`. 
+The mean of these logical values is the same as the proportion of 2 heads. 
+
+
+```{r error=T}
+set.seed(2022)
+
+# (1) 
+x <- rbinom(10000,10,0.3)
+
+# (2)
+two <- x == 2
+  
+# (3)
+mean(two)
+```
+
+
+__(d)__  In part c, the mean of `two` was the proportion of 2 heads obtained from 10,000 experiments. 
+Thus, we call this value an "empirical probability". 
+
+What was your empirical probability in part c? 
+
+In part b, we calculated the theoretical probability of getting 2 heads from a binomial distribution. 
+
+Have you got a similar value? We repeated the same experiment 10,000 times. Thus, the empirical probability must be very similar to the theoretical probability. 
+If not, something was wrong in your code. :)
+
+
+Answer) The empirical probability is 0.2273. The empirical probability is very similar to the theoretical probability of 0.2334744.
+
+
+## Question 16
+
+
+__(a)__  We have a biased coin with probability of a head 30\%, and flip it 10 times. 
+Using `pbinom()` function, find the probability of getting at least 5 heads. 
+
+
+```{r error=T}
+pbinom(5,10,0.3,lower.tail = F)
+
+```
+
+
+__(b)__  Let's try to find an empirical probability. 
+
+
+(1) We toss the same biased coin 10 times, and repeat this experiment 10,000 times. 
+It is the same as tossing 10 coins 10,000 times. 
+Thus, at each time, we toss 10 coins and count how many heads we had. 
+Store the number of heads to `y`. 
+Since we repeat this experiment 10,000 times, `y` will be a $10,000 \times 1$ numeric vector. Each element must be between 0 and 10.
+
+(2) For each element of `y`, check whether the number of heads is at least 5 or not. 
+Here your output must be a logical value. 
+After examining all elements in `y`, you will have a $10,000 \times 1$ logical vector. 
+Save this logical vector as `five`. 
+
+(3) Calculate the mean of `five`. 
+It is the same as the proportion of experiments in which we had at least 5 heads.  
+
+
+```{r error=T}
+set.seed(2022)
+
+# (1) 
+y <- rbinom(10000,10,0.3)
+
+# (2)
+five <- x==5
+  
+# (3)
+mean(five)
+```
+
+
+__(c)__  In part (b), we executed three lines in R. 
+Let's rewrite those three lines into just one. 
+
+
+```{r error=T}
+set.seed(2022)
+mean(rbinom(10000,10,0.3)==5)
+```
+
+
+## Question 17
+
+
+Previously we calculated an empirical probability and an empirical cumulative probability for a binomial distribution.
+
+Now let's calculate the average empirically. 
+
+
+__(a)__  We have a biased coin with probability of a head 30\%, and flip it 25 times. 
+Let $X$ be the number of heads. Calculate the expected number of heads. 
+That is, $E(X)=np$. 
+(This is not an empirical average. This is the expected value theoretically computed.)
+
+
+```{r error=T}
+25*0.3
+```
+
+
+__(b)__  We toss 25 coins, each having a probability of coming up heads of 0.3. 
+We repeat this experiment 10,000 times. 
+Calculate the average of the number of heads. 
+
+
+```{r error=T}
+set.seed(2022)
+mean(rbinom(10000,25,0.3))
+```
+
+
+## Question 18
+
+
+Let's try to find the variance in a binomial distribution. 
+
+
+__(a)__  We have a biased coin with probability of a head 30\%, and flip it 25 times. 
+Let $X$ be the number of heads. Calculate the variance of the number of heads. 
+That is, $V(X)=np(1-p)$. 
+(This is not an empirical variance. This is the variance theoretically computed.)
+
+
+```{r error=T}
+25*0.3*(1-0.3)
+```
+
+
+__(b)__  To calculate an empirical variance, we toss 25 coins, each having a probability of coming up heads of 0.3, and repeat this experiment 10,000 times. 
+Calculate the variance of the number of heads from this experiment. 
+
+
+```{r error=T}
+set.seed(2022)
+var(rbinom(10000,25,0.3))
+```
+
+
+## Question 19
+
+
+Assume that an exam score follows the uniform distribution over (0,100).
+
+
+__(a)__  Let's calculate the empirical proportion of students whose score is higher than or equal to 70. 
+
+From the Uniform distribution, generate 1,000 exam scores randomly.
+Save those numbers to `exam`. 
+(Please do not print out those numbers)
+
+
+```{r error=T}
+set.seed(2022)
+exam <- runif(1000,0,100)
+```
+
+
+__(b)__  From part (a), calculate the proportion of students whose score is higher than or equal to 70.
+
+
+```{r error=T}
+mean(exam >= 70)
+```
+
+
+__(c)__  Let's calculate an empirical average.
+From part (a), calculate the mean of exam scores. 
+
+
+```{r error=T}
+mean(exam)
+```
+
+Theoretical mean is 50. Have you got a similar number?
+Yes, the empirical mean of 49.81616 is very close to 50.
+
+__(d)__  Let's calculate $E(\frac{1}{X})$ empirically. 
+
+Using `exam` generated in part (a), define $\frac{1}{exam}$ as `exam2`. 
+Then, calculate the mean of `exam2`. 
+This is an empirical value for $E(\frac{1}{X})$. 
+Is it the same as a reciprocal of the mean of `exam`? (correct answer is NO)
+<br/>No, 0.108262 is not the same as the reciprocal of the mean of exam which is about 1/2
+
+```{r error=T}
+exam2 <- 1/exam
+mean(exam2)
+
+```
+We know that $E(X) \neq E(\frac{1}{X})$ in general. 
+We have shown this fact empirically in this question.
+

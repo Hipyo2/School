@@ -1,0 +1,1044 @@
+---
+title: "Homework #7"
+author: "Name: Nicholas Ang"
+output: html_document
+---
+
+
+
+## Question 1
+
+
+Assume that `x` always takes a single integer between 0 and 9.
+We wish to change `x` into a matching character string. For example, if the value of `x` is 3, then return `"three"`.
+Use `switch()` function to produce a command that takes in `x` and returns a matching character string for all possible values $0, 1, \ldots, 9$.
+
+
+```{r error=T} 
+x <- 3
+switch(x, "one","two","three","four","five","six","seven","eight","nine")
+```
+
+
+## Question 2
+
+
+In lecture notes, we had 
+
+```{r error=T} 
+mystring <- "Bart"
+x <- switch(mystring, Homer=12, Lisa=34, Bart=90, NA)
+```
+
+Now `mystring` is a character vector. Unfortunately, `switch()` function doesn't work for a vector.
+For example, 
+
+```{r error=T} 
+mystring <- c("Bart", "Homer", "Mihye", "Homer")
+x <- switch(mystring, Homer=12, Lisa=34, Bart=90, NA)
+```
+
+Thus, we wish to create a `for` loop to perform `switch()` function for *each element* of `mystring`. 
+
+Note that `seq_along(mystring)` is the same as `1:length(string)`.
+Since you need to perform `switch()` function for each element of `mystring`, you also need to save the output into a vector. 
+To store your output, I initialized `myoutput` below. 
+(Hint: You may use `myoutput[i]` to save your output from the `switch()` function at the i-th iteration)
+
+Complete the following R code.
+
+
+```{r error=T} 
+mystring <- c("Bart", "Homer", "Mihye", "Homer")  # do not change this line
+myoutput <- c()                                   # do not change this line
+
+for(i in seq_along(mystring)){
+  myoutput[i] = switch(mystring[i],  Homer=12, Lisa=34, Bart=90, NA)
+}
+print(myoutput)
+```
+
+
+## Question 3
+
+
+__(a)__  Using a `for` loop, calculate $1+2+\cdots+x$ when $x$ is given.
+
+
+```{r error=T} 
+x <- 10
+sumX = 0
+for(i in 1:x){
+  sumX = sumX + i
+}
+print(sumX)
+```
+
+
+__(b)__  Create a function to calculate $1+2+\cdots+x$ for any positive integer of `x`.
+
+
+```{r error=T} 
+Q3 <- function(x){
+  # here, copy and paste your R code from part a (except the first line)
+  sumX = 0
+  for(i in 1:x){
+    sumX = sumX + i
+  }
+  print(sumX)
+}
+
+# check if your function is correct
+Q3(10)  # is it 55?
+```
+
+
+__(c)__  In part b, we didn't check whether `x` is a positive integer or not. 
+Let's add an `if`-`else` statement to check whether `x` is positive or not. 
+If `x` is not positive, return `"x must be positive"`.
+(Note: We will not check whether `x` is an integer or not because it is not simple in R.)
+
+
+```{r error=T} 
+# copy and paste your Q3 function from part b, and modify it
+Q3 <- function(x){
+  # here, copy and paste your R code from part a (except the first line)
+  if (x > 0)
+  {
+    sumX = 0
+    for(i in 1:x){
+      sumX = sumX + i
+    }
+    print(sumX)
+  }else
+  {
+    print("x must be positive")
+  }
+}
+
+# check if your function is correct
+Q3(-5) 
+```
+
+
+## Question 4
+
+
+Assume that the current stock price is 126.34.
+Tomorrow's stock price will be changed based on the today's price. 
+Thus, we multiplied a random number generated from Uniform distribution (0.99, 1.01).   
+(This is just an assumption for HW, not reality!)
+
+In the R code below, we used `repeat` statement to update a stock price everyday (by multiplying a random number). 
+
+Now assume that if the stock price is below 124.5, it is a good time to buy more stocks.
+Thus, while running `repeat` statement, we will wait until the stock price is below 124.5. 
+
+* If the stock price is higher than or equal to 124.5, we will do nothing and wait the next day again. 
+
+* If the stock price is finally below 124.5, we will return `"Stock price is below 124.5! Buy it while it's cheap!"` and stop running the `repeat` statement. 
+
+
+```{r} 
+set.seed(1026)
+
+# Stock price
+stock_price <- 126.34
+
+repeat {
+  # New stock price
+  stock_price <- stock_price * runif(1, .99, 1.01)
+  print(stock_price)
+  
+  # Check
+  if(stock_price < 124.5) {
+    print("Stock price is below 124.5! Buy it while it's cheap!")
+    break
+  }
+}
+```
+
+Based on this R code, solve the following questions:
+
+
+__(a)__  Change the condition in the `if` statement to break when the stock price is below 125. Do not forget to change the return message accordingly.
+
+
+```{r error=T} 
+set.seed(1026)
+
+# Stock price
+stock_price <- 126.34
+
+repeat {
+  # New stock price
+  stock_price <- stock_price * runif(1, .99, 1.01)
+  print(stock_price)
+  
+  # Check
+  if(stock_price < 125) {
+    print("Stock price is below 125! Buy it while it's cheap!")
+    break
+  }
+}
+```
+
+
+__(b)__  Let's say that the current stock price is 67.55.  
+In this question, we assume that a stock price decreases by 0.5\% everyday, thus multiply 0.995 to get the stock price for tomorrow. 
+By using this rule, we will update the stock price everyday.
+
+Fill in the blanks below to update the stock price everyday.
+If the stock price is below 66, return `"Stock price is below 66! Buy it while it's cheap!"` and stop running the loop. 
+
+
+```{r error=T} 
+# Stock price
+stock_price <- 67.55
+
+repeat {
+  # New stock price
+  stock_price <- stock_price * .995
+  print(stock_price)
+  
+  # Check
+  if(stock_price < 66) {
+    print("Stock price is below 66! Buy it while it's cheap!")
+    break
+  }
+}
+```
+
+
+__(c)__  In part (b), how many times the stock price was printed? \
+The stock price was printed 5 times.
+
+__(d)__  Copy and paste your code from part (b). 
+Now move the statement `print(stock_price)` to after the `if` statement, but still inside the loop. 
+
+
+```{r error=T} 
+# Stock price
+stock_price <- 67.55
+
+repeat {
+  # New stock price
+  stock_price <- stock_price * .995
+  
+  # Check
+  if(stock_price < 66) {
+    print("Stock price is below 66! Buy it while it's cheap!")
+    break
+  }
+  print(stock_price)
+}
+```
+
+
+__(e)__  In part (d), how many times the stock price was printed? \
+The stock price was printed 4 times.
+
+
+## Question 5
+
+
+Consider a vehicle speed example. 
+
+
+__(a)__  `speed` shows the current speed, and is initially set as 64. 
+Complete the following `while` loop with the following characteristics:
+
+* The condition of the `while` loop should check if `speed` is higher than 30.
+
+* If `speed` is higher than 30, then print out `"Slow down!"`, decrease the speed *by* 7, and assign this new value to `speed` again. (if this step is wrong, you will get an infinite loop!)
+
+* If `speed` is lower than or equal to 30, stop running the `while` loop. 
+
+
+```{r error=T} 
+speed <- 64
+
+while (speed > 30) {
+  print("Slow down!")
+  speed <- speed - 7
+}
+
+print(speed)
+```
+
+
+__(b)__  In part (a), we checked whether `speed` is higher than 30 or not. Now we will update your code in part (a). 
+
+Inside the body of the `while` loop, do the followings:
+
+* If `speed` is higher than 48, then print out `"Slow down big time!"` and decrease `speed` by 11. 
+
+* If `speed` is lower than or equal to 48, then print out `"Slow down!"` and decrease `speed` by 6. 
+
+
+```{r error=T}  
+speed <- 64
+
+while (speed > 30) {
+  print(paste("Your speed is",speed))
+  if (speed > 48) {
+    print("Slow down big time!")
+    speed = speed - 11
+  } else {
+    print("Slow down!")
+    speed = speed - 6
+  }
+}
+```
+
+
+__(c)__  In this question, we set the initial value of `speed` as 88. (it is too fast!)
+Copy and paste your `if`-`else` statement from part (b). 
+
+Let's add one more `if` statement now. 
+Inside the `while` loop, if `speed` is higher than 80, then we don't want to continue running the `while` loop anymore. (The driver is out of control! We give up.) 
+Fill in the blanks below.
+
+
+```{r error=T} 
+speed <- 88
+
+while (speed > 30) {
+  if (speed > 80) {
+    print("The driver is out of control! We give up.")
+    break
+  }
+  
+  print(paste("Your speed is",speed))
+  if (speed > 48) {
+    print("Slow down big time!")
+    speed = speed - 11
+  } else {
+    print("Slow down!")
+    speed = speed - 6
+  }
+}
+```
+
+
+## Question 6
+
+
+The initial value of `i` is 1. Complete the `while` loop so that it:
+
+* prints out the triple of `i`, so `3*i` at each run.
+
+* stops running if the triple of `i` is divisible by 8, but still prints out this triple before stopping.
+
+To check whether `a` is divisible by `b` or not, you can use `a %% b == 0` in R.
+
+
+```{r error=T} 
+i <- 1
+
+while (i <= 10) {
+  print(3*i)
+  if (3*i %% 8 == 0) {
+    break
+  }
+  i <- i + 1
+}
+```
+
+
+## Question 7
+
+
+In HW6, we studied two ways to loop over a vector.
+
+```{r} 
+primes <- c(2, 3, 5, 7, 11, 13)
+
+# example 1
+for (p in primes) {
+  print(p)
+}
+
+# example 2
+for (i in 1:length(primes)) {
+  print(primes[i])
+}
+```
+
+
+__(a)__  Let's practice more. 
+A vector `linkedin` contains the number of views your LinkedIn profile had in the last seven days.
+Write a `for` loop that iterates over all the elements of `linkedin` and prints out every element separately.
+Do this in two ways: 1) using the "example 1" and "example 2" above.
+
+
+```{r error=T} 
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+
+# example 1
+for (i in linkedin){
+  print(i)
+}
+
+# example 2
+for (i in 1:length(linkedin)){
+  print(linkedin[i])
+}
+```
+
+
+__(b)__  Let's modify your first `for` loop in part (a). 
+Add code to the `for` loop that loops over the elements of the `linkedin` vector:
+
+* If the value of an element exceeds 10, print out `"You're popular!"`.
+
+* If the value of an element does not exceed 10, print out `"Be more visible!"`.
+
+
+```{r error=T} 
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+
+for (i in linkedin) {
+  if (i > 10) {
+    print("You're popular!")
+  } else {
+    print("Be more visible!")
+  }
+  print(i)
+}
+```
+
+
+__(c)__  Let's extend your `for` loop more. Copy and paste your `if`-`else` statement from part (b). 
+After that, add two more `if` statements as follows:
+
+* If the value of an element exceeds 16, print out `"This is ridiculous. I am outta here!"` and stop running the `for` loop.
+
+* If the value of an element is lower than 5, print out `"This is too embrrasing!"` and move to the next iteration. 
+
+
+```{r error=T} 
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+
+for (i in linkedin) {
+  if (i > 10) {
+    print("You're popular!")
+  } else {
+    print("Be more visible!")
+  }
+  
+  # Add if statement
+  if(i > 16){
+    print("This is ridiculous. I am outta here!")
+    break
+  }
+  
+  # Add if statement
+  if(i < 5){
+    print("This is too embarrassing!")
+    next
+  }
+  
+  print(i)
+}
+```
+
+
+## Question 8
+
+
+We have a matrix `A` defined as below.
+
+
+```{r} 
+A <- matrix(1:12, 3, 4)
+print(A)
+```
+
+
+Print out each element of the matrix `A`. That is, print out (1,1)th element, (1,2)th element, (1,3)th element, (1,4)th element, (2,1)th element, and so on, in this order.
+
+To do this, you need a `for` loop inside a `for` loop. 
+
+* The outer loop should loop over the rows, with loop index `i`.
+
+* The inner loop should loop over the columns, with loop index `j`.
+
+* Inside the inner loop, use `print()` function to print out the (i,j)th element of the matrix `A`.
+
+
+```{r error=T} 
+for (i in 1:nrow(A)) {
+  for (j in 1:ncol(A)) {
+    print(A[i,j])
+  }
+}
+```
+
+
+## Question 9
+
+
+In lecture notes, we defined a function `myfactorial` to calculate $x!$ as below:
+
+```{r error=T} 
+myfactorial <- function(x){
+  i <- 1
+  temp <- 1
+  while(i<=x){
+    temp <- temp*i
+    i <- i+1
+  }
+  return(temp)
+}
+```
+
+In fact, this is not a good function. It works okay when the value of `x` is non-negative. 
+However, when `x` is negative, it still gives us the value of `1` which is not true.
+For example,
+
+```{r error=T} 
+myfactorial(-2)
+```
+
+Let's modify the function below as the following:
+
+* Check whether the value of `x` is non-negative or not. 
+
+* If it is non-negative, go ahead to perform the body code in the braced area (from the 2nd to 8th line).
+
+* If it is negative, print out `"x is a negative value."` and do not perform the body code in the braced area.  
+
+
+```{r error=T} 
+myfactorial <- function(x){
+  if(x > 0)
+  {
+    i <- 1
+    temp <- 1
+    while(i<=x){
+      temp <- temp*i
+      i <- i+1
+    }
+    return(temp)
+  }else
+  {
+    print("x is a negative value")
+  }
+}
+
+
+# check if it prints out "x is a negative value."
+myfactorial(-2)  
+```
+
+
+## Question 10
+
+
+Create a function named `pwr` as follows:
+
+* It raises a number to any power (that is, $x^y$). 
+
+* Make the default raise the input number(s) to the power of 2.
+
+* To check if it works fine, calculate $3^5$ using your function. 
+
+
+```{r error=T} 
+pwr = function(x,y = 2){
+  x^y
+}
+
+pwr(3,5)
+
+```
+
+
+## Question 11  
+
+
+The probability density function of a log-normal distribution with $\mu=1$ and $\sigma^2=1$ is given by
+
+\[
+f(x)=\frac{1}{x\sqrt{2\pi}}\exp(-\frac{(\log(x)-1)^2}{2})
+\]
+
+
+__(a)__  Create a function named `lognormal` to calculate the value of $f(x)$ for any $x$.
+
+
+```{r error=T} 
+lognormal = function(x){
+  fx = (1/(x*sqrt(2*pi))  * exp(-((log(x, base = exp(1)) - 1)^2)/2))
+  return(fx)
+}
+```
+
+
+__(b)__  Using `lognormal` function defined in part (a), calculate the value of $f(5)$. Is it 0.06626564?
+
+
+```{r error=T} 
+f5 = lognormal(5)
+print(f5)
+```
+Yes, it is 0.06626564
+
+
+## Question 12
+
+
+In HW3, we had three vectors of Apple, IBM, and Microsoft stock prices and combined them as `stocks`.
+
+
+```{r} 
+apple <- c(109.49, 109.90, 109.11, 109.95, 111.03, 112.12, 113.95, 113.30, 115.19, 115.19,115.82, 115.97, 116.64, 116.95, 117.06, 116.29, 116.52, 117.26, 116.76, 116.73, 115.82)
+
+ibm <- c(159.82, 160.02, 159.84, 160.35, 164.79, 165.36, 166.52, 165.50, 168.29, 168.51, 168.02, 166.73, 166.68, 167.60, 167.33, 167.06, 166.71, 167.14, 166.19, 166.60, 165.99)
+
+micr <- c(59.20, 59.25, 60.22, 59.95, 61.37, 61.01, 61.97, 62.17, 62.98, 62.68, 62.58, 62.30, 63.62, 63.54, 63.54, 63.55, 63.24, 63.28, 62.99, 62.90, 62.14)
+
+stocks <- cbind(apple, ibm, micr)
+head(stocks)
+
+# Do not use vectors apple, ibm, and micr.
+rm(list=c("apple", "ibm", "micr"))
+```
+
+
+__(a)__  Let's calculate the mean and sum for each variable in `stocks` and store them in a matrix `B`. 
+`B` is a $2\times 3$ matrix. 
+In the first row, we store the mean for each variable. 
+In the second row, we store the sum for each variable. 
+The first column is for `apple`, the second column is for `ibm`, and the third column is for `micr`. 
+That is, 
+
+\[
+B = \left(\begin{array}{ccc}
+\mbox{mean(apple)} & \mbox{mean(ibm)} & \mbox{mean(micr)} \\ \mbox{var(apple)} & \mbox{var(ibm)} & \mbox{var(micr)}
+\end{array} \right)
+\]
+
+Complete the following `for` loop. 
+
+Hint: Calculate the mean and sum for the $i$th column vector of `stocks` and save those two values into the $(1,i)$th and $(2,i)$th elements of `B`, respectively.
+We have three columns in `stocks`. Thus, `i` is from 1 to 3.
+
+
+```{r error=T} 
+# initialize
+B <- matrix(NA, 2, 3) 
+
+for (i in 1:ncol(stocks)){
+    B[1, i] <- mean(stocks[, i])
+    B[2, i] <- sum(stocks[, i])
+}
+print(B)
+```
+
+
+__(b)__  In part (a), we calculated the mean and sum for each column separately. 
+Now let's calculate the column mean and column sum.  By doing so, you don't need to repeat the calculation for each column.
+
+* Calculate the column mean of `stocks` and save them into the first row of `B`,
+
+* Calculate the column sum of `stocks` and save them into the second row of `B`,
+
+
+```{r error=T} 
+# initialize
+B <- matrix(NA, 2, 3) 
+
+B[1,] <- colMeans(stocks)    # column mean
+B[2,] <- colSums(stocks)    # column sum
+
+print(B)
+```
+
+Have you got the same output as in part (a)?
+
+
+__(c)__  Now we have a missing value in `stocks`. 
+
+```{r} 
+stocks[12,1] <- NA
+```
+
+Copy and paste your code from part (a). It doesn't work anymore due to a missing value.
+To calculate the mean and sum, modify your code below.
+
+
+```{r error=T}  
+# initialize
+B <- matrix(NA, 2, 3) 
+
+for (i in 1:ncol(stocks)){
+    B[1, i] <- mean(stocks[, i], na.rm = T)
+    B[2, i] <- sum(stocks[, i], na.rm = T)
+}
+print(B)
+```
+
+
+__(d)__  You still have a missing value in `stocks`. 
+Copy and paste your code from part (b). It doesn't work anymore due to a missing value.
+To calculate the column mean and column sum, modify your code below.
+
+
+```{r error=T}  
+# initialize
+B <- matrix(NA, 2, 3) 
+
+B[1,] <- colMeans(stocks, na.rm = T)    # column mean
+B[2,] <- colSums(stocks, na.rm = T)    # column sum
+
+print(B)
+```
+
+
+## Question 13
+
+
+When we have a sample data $X_1,X_2,\ldots,X_n$, a sample variance is defined by
+\[
+\frac{1}{n-1}\sum_{i=1}^n (X_i-\overline{X})^2,
+\]
+where $\overline{X}$ is a sample mean and $n$ is a sample size. 
+
+
+__(a)__  There is a built-in function `var` in R.
+Create your own function `variance` to calculate a sample variance. 
+To make it simple, you are allowed to use other built-in functions, such as `mean`, `sum`, `length`. 
+Assume that a sample data is stored in `x` as a vector.
+
+
+```{r error=T}  
+variance <- function(x){
+  sumX = 0
+  meanX = mean(x)
+  (1/(length(x)-1)) * sum((x - meanX)^2)
+}
+```
+
+
+__(b)__  Let's check if your function works. A sample data `x` is given below.
+Calculate the sample variance of `x` using `variance` function defined in part (a).
+
+
+```{r error=T}  
+x <- c(5, 2, 6, 2, 7, 4)
+variance(x)
+```
+
+
+## Question 14
+
+
+Let $h(x,n) = 1+x+x^2+\cdots+x^n = \sum_{i=0}^n x^i$. 
+
+
+__(a)__  Create a function `h` to calculate $h(x,n)$ using a `for` loop.
+
+
+```{r error=T}  
+h <- function(x, n){
+  xi = 1
+  for(i in 1:n)
+  {
+    xi = xi + x^i
+  }
+  return(xi)
+}
+```
+
+
+__(b)__  Using `h` function, calculate $h(2,5)$. Is it 63?
+
+
+```{r error=T}  
+h(2,5)
+```
+Yes, it is 63
+
+
+## Question 15
+
+
+When we have a sample data $X_1,X_2,\ldots,X_n$, a geometric mean is defined by
+\[
+\Big(\prod_{i=1}^n X_i\Big)^{1/n}
+\]
+
+
+__(a)__  Create a function `geometric` to calculate a geometric mean.
+Assume that a sample data is stored in `x` as a vector. Fill in the blanks below.
+
+
+```{r error=T}  
+geometric <- function(x){
+  temp <- 1             # initialize
+  
+  for(i in 1:length(x)){    # loop over all elements of x
+    temp <- temp * x[i]
+  }
+  
+  final <- (temp)^(1/length(x))
+  return(final)
+}
+```
+
+
+__(b)__  Let's check if your function works. A sample data `x` is given below.
+Calculate the geometric mean of `x` using `geometric` function defined in part (a).
+Is it 3.870109?
+
+
+```{r error=T}  
+x <- c(5, 2, 6, 2, 7, 4)
+geometric(x)
+```
+Yes, it is 3.870109
+
+
+## Question 16
+
+
+The standard form of a quadratic equation is
+\[
+ax^2 + bx + c =0,
+\]
+where $a$, $b$, and $c$ are known values and $a\neq 0$.
+
+The quadratic formula is:
+\[
+x = \frac{-b\pm \sqrt{b^2-4ac}}{2a}
+\]
+
+When the discriminant $b^2-4ac$ is
+
+* positive, there are two real solutions.
+
+* zero, there is one real solution.
+
+* negative, there are two complex solutions.
+
+
+__(a)__  Let's create a function `quadratic` to solve a quadratic equation as follows:
+
+* If `a` is zero, print out `"This is not a quadratic equation"` and do not calculate anything.
+
+* If the discriminant $b^2-4ac$ is positive, return two solutions. 
+
+* If the discriminant $b^2-4ac$ is zero, return one solution. The solution is simply $x=\frac{-b}{2a}$.
+
+* If the discriminant $b^2-4ac$ is negative, do not calculation anything else and simply print out `"It's complex!"`. 
+
+
+```{r error=T}  
+quadratic <- function(a,b,c){
+  if(a == 0)
+  {
+    print("This is not a quadratic equation")
+  }else{
+    if(b^2 - 4*a*c > 0)
+    {
+      x1 = (-b + sqrt(b^2 - (4*a*c)))/(2*a)
+      x2 = (-b - sqrt(b^2 - (4*a*c)))/(2*a)
+      return(c(x1,x2))
+    }else if(b^2 - 4*a*c == 0){
+      x = -b/(2*a)
+      return(x)
+    }else
+    {
+      print("It's complex!")
+    }
+  }
+}
+```
+
+
+__(b)__  Using `quadratic` function defined in part (a), solve $2x^2 + 3x + 1 = 0$
+
+
+```{r error=T}  
+quadratic(2,3,1)
+```
+
+
+
+## Question 17
+
+
+Suppose that $X_1, \ldots, X_n$ is a sample from a normal distribution having unknown parameters $\mu$ and $\sigma^2$.
+Let's perform a hypothesis test for a population variance $\sigma^2$.  
+Unfortunately, there is no built-in function for this test.
+
+In this example,
+
+* Null hypothesis: $H_0: \sigma^2 = \sigma_0^2$
+
+* Alternative hypothesis: $H_1: \sigma^2 > \sigma_0^2$
+
+* Test statistic: $\displaystyle\frac{(n-1)S^2}{\sigma_0^2}$
+
+* If a p-value is less than $\alpha$, we reject $H_0$.
+
+
+__(a)__  Create a function `mytest` to perform a hypothesis test for a population variance. 
+Similar to z-test in lecture notes, fill in the blanks below.
+
+In this function, x is a data vector, `sigma02` is $\sigma_0^2$, $S^2$ can be calculated by `var(x)`, and $\alpha$ is a significance level. 
+
+(I calculated a p-value for you. You don't need to modify it.)
+
+
+```{r error=T}  
+mytest <- function(x, sigma02, alpha){        # input: x, sigma02, alpha
+  
+  H0 <- paste("HO: sigma^2 =", sigma02)           # null hypothesis
+  H1 <- paste("H1: sigma^2 >", sigma02)           # alternative hypothesis
+  
+  n <- length(x)                              # n = sample size
+  chi2 <- ((n-1)*var(x))/sigma02                # test statistic
+  
+  p <- pchisq(chi2, n-1, lower.tail=F)        # p-value
+  
+  if (p < alpha) {                              # p-value is less than alpha?
+    result <- "Reject the null hypothesis"
+  } else{
+    result <- "Fail to reject the null hypothesis"
+  }
+  
+  # return
+  
+  list(hypotheses = c(H0,H1),                 # hypotheses
+       test.statistic = chi2,              # test statistic
+       p.value = p,                     # p-value
+       test.result = result)                # show result of hypothesis test
+}
+```
+
+
+__(b)__  Using `mytest` function defined in part (a), perform a hypothesis test for a population variance.
+In this example, the data `x` is given below.
+The null and alternative hypotheses are $H_0: \sigma^2 = 2$ and $H_1: \sigma^2 > 2$. 
+Use $\alpha=0.05$. 
+
+
+```{r error=T}  
+x <- c(61.1,58.2,62.3,64.0,59.7,66.2,57.8,61.4)
+mytest(x,2,0.05)
+```
+
+
+## Question 18
+
+
+Suppose you are tasked with computing the precise dosage amounts of a certain drug in a collection of hypothetical scientific experiments. 
+
+These amounts depend upon some predetermined set of "dosage thresholds" (`lowdose`, `meddose`, and `highdose`), as well as a predetermined dose level factor vector named `doselevel`. 
+
+Write a set of nested `if` statements that produce a new numeric vector called `dosage`, according to the following rules:
+
+* First, *if* there are any instances of `"High"` in `doselevel`, perform the following operations:
+
+  + Check *if* `lowdose` is greater than or equal to 10. If so, overwrite `lowdose` with 10; 
+    *otherwise*, overwrite `lowdose` by itself divided by 2.
+
+  + Check *if* `meddose` is greater than or equal to 26. If so, overwrite `meddose` by 26.
+  
+  + Check *if* `highdose` is less than 60. If so, overwrite `highdose` with 60; 
+    *otherwise*, overwrite `highdose` by itself multiplied by 1.5.
+
+  + Create a vector named `dosage` with the value of `lowdose` repeated (`rep`) to match the `length` of `doselevel`.
+
+  + Overwrite the elements in `dosage` corresponding to the index positions of instances of `"Med"` in `doselevel` by `meddose`.
+  
+  + Overwrite the elements in `dosage` corresponding to the index positions of instances of `"High"` in `doselevel` by `highdose`.
+
+* *Otherwise* (in other words, if there are no instances of `"High"` in `doselevel`), perform the following operations:
+
+  + Create a new version of `doselevel`, a factor vector with levels `"Low"` and `"Med"` only, and label these with `"Small"` and `"Large"`, respectively .
+
+  + Check to see *if* `lowdose` is less than 15 AND `meddose` is less than 35. If so, overwrite `lowdose` by itself multiplied by 2 and overwrite `meddose` by itself plus `highdose`.
+  
+  + Create a vector named `dosage`, which is the value of `lowdose` repeated (`rep`) to match the `length` of `doselevel`.
+
+  + Overwrite the elements in `dosage` corresponding to the index positions of instances of `"Large"` in `doselevel` by `meddose`.
+
+
+```{r error=T} 
+# example
+lowdose <- 12.5
+meddose <- 25.3
+highdose <- 58.1
+doselevel <- factor(c("Low","High","High","High","Low","Med", "Med"),levels=c("Low","Med","High"))
+
+# there are any instances of "High" in doselevel?
+if (any(doselevel == "High")){
+  
+  # lowdose is greater than or equal to 10 ?
+  if (lowdose >= 10){
+    
+    # overwrite lowdose with 10
+    lowdose <- 10
+      
+  } else{
+    # overwrite lowdose by itself divided by 2
+    lowdose <- lowdose/2
+  }
+  
+  # meddose is greater than or equal to 26 ?
+  if (meddose >= 26){
+    
+    # overwrite meddose by 26
+    meddose <- 26
+  } 
+  
+  # highdose is less than 60 ?
+  if (highdose < 60){
+    
+    # overwrite highdose with 60
+    highdose <- 60
+      
+  } else{
+    # overwrite highdose by itself multiplied by 1.5
+    highdose <- highdose*1.5
+  }
+  
+  # Create dosage with the value of lowdose repeated to match the length of doselevel
+  dosage <- rep(lowdose, length(doselevel))
+
+  # Overwrite the elements in dosage corresponding to the index positions of instances of "Med" in doselevel by meddose
+  dosage[doselevel == "Med"] <- meddose
+  
+  # Overwrite the elements in dosage corresponding to the index positions of instances of "High" in doselevel by highdose
+  dosage[doselevel == "High"] <- highdose
+    
+} else{
+  # Create a new version of doselevel with levels "Low" and "Med" only, and label these with "Small" and "Large", respectively
+  doselevel <- factor(doselevel, c("Low", "Med"), c("Small", "Large"))
+
+  # lowdose is less than 15 AND meddose is less than 35 ?. If so, 
+  if (lowdose < 15 & meddose < 35){
+    
+    # overwrite lowdose by itself multiplied by 2
+    lowdose <- lowdose*2
+    
+    # overwrite meddose by itself plus highdose
+    meddose <- meddose + highdose
+  }
+  
+  # Create dosage, which is the value of lowdose repeated to match the length of doselevel
+  dosage <- rep(lowdose, length(doselevel))
+
+  # Overwrite the elements in dosage corresponding to the index positions of instances of "Large" in doselevel by meddose
+  dosage[doselevel == "Large"] <- meddose
+  
+}
+print(dosage)
+```
+
+
+
